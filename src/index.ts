@@ -1,3 +1,4 @@
+import { Server as SocketIOServer } from "socket.io";
 import compression from "compression";
 import cors from "cors";
 import express, { Request, Response } from "express";
@@ -84,4 +85,82 @@ const server = app.listen(PORT, () => {
 });
 
 process.on("SIGTERM", () => server.close());
+
+const io = new SocketIOServer(server, {
+  cors: { origin: true, credentials: true },
+});
+
+// Zeebly Admin (cap-admin-web) Socket.IO namespace
+const capAdminNamespace = io.of("/cap-admin-web");
+capAdminNamespace.on("connection", (socket) => {
+  console.log(`[cap-admin-web] socket connected: ${socket.id}`);
+  socket.on("admin-notify-all", (data: { title: string; message: string }, ack?: (response: unknown) => void) => {
+    console.log(`[cap-admin-web] admin-notify-all:`, data);
+    const response = {
+      data: {
+        title: data.title,
+        message: data.message,
+        admin: "zeebly-admin-1",
+        admin_name: "Zeebly Admin",
+        is_deleted: false,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        _id: `notif-${Date.now()}`,
+        id: `notif-${Date.now()}`,
+      },
+      status: true,
+      status_code: 200,
+      delivered: true,
+      message: "Notification sent to all users",
+    };
+    if (typeof ack === "function") ack(response);
+    socket.broadcast.emit("new-notification", response.data);
+  });
+  socket.on("disconnect", () => {
+    console.log(`[cap-admin-web] socket disconnected: ${socket.id}`);
+  });
+});
+
+// artisan-services-web Socket.IO namespaces
+const artisanChatNamespace = io.of("/artisan-services-web/chat");
+artisanChatNamespace.on("connection", (socket) => {
+  console.log(`[artisan-services-web/chat] socket connected: ${socket.id}`);
+  socket.on("user:join", (data: { userId: string; role: string; firstname: string }) => {
+    console.log(`[artisan-services-web/chat] user joined:`, data);
+  });
+  socket.on("message", (data: { userId: string; firstname: string; role: string; photoUrl?: string; message: string; recipient: { _id: string } }) => {
+    console.log(`[artisan-services-web/chat] message:`, data);
+    socket.broadcast.emit("response", {
+      userId: data.userId,
+      firstname: data.firstname,
+      role: data.role,
+      photoUrl: data.photoUrl || "",
+      message: data.message,
+    });
+  });
+  socket.on("disconnect", () => {
+    console.log(`[artisan-services-web/chat] socket disconnected: ${socket.id}`);
+  });
+});
+
+const artisanDisputeNamespace = io.of("/artisan-services-web/dispute");
+artisanDisputeNamespace.on("connection", (socket) => {
+  console.log(`[artisan-services-web/dispute] socket connected: ${socket.id}`);
+  socket.on("user:join", (data: { userId: string; role: string; firstname: string; disputeId?: string }) => {
+    console.log(`[artisan-services-web/dispute] user joined:`, data);
+  });
+  socket.on("message", (data: { userId: string; firstname: string; role: string; photoUrl?: string; message: string; recipient: { _id: string } }) => {
+    console.log(`[artisan-services-web/dispute] message:`, data);
+    socket.broadcast.emit("response", {
+      userId: data.userId,
+      firstname: data.firstname,
+      role: data.role,
+      photoUrl: data.photoUrl || "",
+      message: data.message,
+    });
+  });
+  socket.on("disconnect", () => {
+    console.log(`[artisan-services-web/dispute] socket disconnected: ${socket.id}`);
+  });
+});
 process.on("SIGINT", () => server.close());

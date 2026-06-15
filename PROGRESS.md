@@ -285,3 +285,695 @@ GraphQL fields covered: `getUserDetail`, `getBusinessDetail`, `getSaleStat`, `ge
 - **Expenses Report Page**: Added GraphQL dummy response for `getExpensesByCategory` with an Array value to resolve `.sort is not a function` chart exceptions.
 - **Staff Report Page**: Added `getStaffSummaryCards` (incorporating full `staffActivities` mapping) and `getSalesByStaff` returning an unpaginated mapping, eliminating the `TypeError: Cannot convert undefined or null to object` fatal crash from unresolvable fallback schema formats.
 - **Passcode Verification**: Fixed the REST API endpoints (`POST /auth/passcode/verify` and `/auth/passcode/set`) to return `isPasscodeSet: true` directly in the response payload, matching the specific frontend object destructing criteria (`request?.data?.isPasscodeSet`).
+
+---
+
+## 2026-05-22 (Vendor Management Web)
+
+### Vendor Management Web — dummy backend creation
+
+Client path: `C:\Users\user\Documents\Programming\Projects\Alerzo\vmi-admin-web`
+
+Backend module: `src/projects/vendor-management-web`
+
+#### Backend implemented
+
+Routes at `/vendor-management-web`:
+
+```
+GET  /                              — info
+POST /graphql                       — handles GraphQL operations using saas-platform-admin-web logic
+GET  /graphql                       — info
+POST /upload/media                  — upload dummy endpoint
+```
+
+Extensive dummy data and fixtures were provided, covering similar domain entities as the SaaS platform backend.
+
+#### Client patches
+
+1. **`.env`** — URLs redirected to `http://localhost:5050/vendor-management-web`
+2. **`src/services/auth.js`** — patched `isDemoBackend` for `vendor-management-web`.
+3. **`src/graphql/index.js`** — patched `isDemoBackend` check.
+
+#### Verification
+
+- `npm run type:check` — passed.
+- `npm run build` — passed.
+- `npm run lint` — warnings resolved.
+- Endpoints registered successfully.
+
+---
+
+## 2026-05-22 (Inventory Admin Web)
+
+### Inventory Admin Web — dummy backend creation
+
+Client path: `C:\Users\user\Documents\Programming\Projects\Alerzo\veedez-admin-web`
+
+Backend module: `src/projects/inventory-admin-web`
+
+#### Backend implemented
+
+Routes at `/inventory-admin-web`:
+
+```
+GET  /                              — info
+POST /graphql                       — handles GraphQL operations
+GET  /graphql                       — info
+POST /upload/media                  — upload dummy endpoint
+```
+
+Extensive dummy data and fixtures were provided. Handled `verifyOTP` mutation internally to return deterministic fake tokens (`demo-firebase-custom-token`) instead of integrating real Firebase.
+
+#### Client patches
+
+1. **`.env`** — URLs redirected to `http://localhost:5050/inventory-admin-web`
+2. **`src/services/auth.js`** — patched `isDemoBackend` checks to bypass Firebase's `signInWithCustomToken` and `generateIdToken`.
+
+#### Verification
+
+- `npm run type:check` — passed.
+- `npm run build` — passed.
+- `npm run lint` — warnings resolved.
+- Endpoints registered successfully.
+
+---
+
+## 2026-05-22 (Zeebly Admin Substitution)
+
+### Zeebly Admin (cap-admin) — dummy backend substitution
+
+Client path: `C:\Users\user\Documents\Programming\Projects\Alerzo\zeebly-admin`
+
+Backend module: `src/projects/cap-admin-web`
+
+Substituted the initial `vmi-admin-web` experiment by removing `vendor-management-web` and creating `cap-admin-web` specifically for the `zeebly-admin` dashboard project.
+
+#### Backend implemented
+
+Routes at `/cap-admin-web`:
+- `POST /graphql` — GraphQL endpoint that correctly resolves `authenticateAdminUser` mutation and injects `x-token` into HTTP response headers to mock local token storage for Apollo Client.
+
+#### Client patches
+
+1. **`.env`** — URLs redirected to `http://localhost:5050/cap-admin-web`.
+2. Fully validated that `useAuthStore` receives the proxy tokens automatically.
+
+#### Global Health Check
+Verified build stability across multiple major legacy and current portfolio apps:
+- `zeebly-admin` (`npm run build` passed)
+- `veedez-admin-web` (`npm run build` passed)
+- `veedez-web-app` (`npm run build` passed)
+- `alerzo-admin-web` (`npm run build` passed)
+
+---
+
+## 2026-06-02
+
+### Castle Stash (mono-web) — backend endpoint fixes
+
+Client path: `C:\Users\user\Documents\Programming\Projects\Composite\mono-web`
+
+Backend module: `src/projects/mono-web` (base path `/mono-web/techmillresource/mono-api/api`)
+
+#### What was already implemented
+
+The `mono-web` module already had a complete scaffold with database setup, seed data, controllers, and routes covering all 25 POST endpoints. A demo user (`demo@castlestash.com` / `Password1`), demo transactions, 3 properties, and a saved bank account were seeded.
+
+#### Issues fixed
+
+| # | Endpoint | Issue | Fix |
+|---|---|---|---|
+| 1 | `/forgotPassword` | Controller read `req.body.email` but frontend sends `loginName` | Changed destructure to `{ loginName }` |
+| 2 | `/resetPassword` | Controller read `{ token, newPassword }` but frontend sends `{ resetToken, password }` | Changed destructure to `{ resetToken, password }` |
+| 3 | `/twoFactorAuth` | Controller read `{ action }` ("enable"/"disable") but frontend sends `{ status }` ("R"/"D") | Changed to use `{ status }` directly |
+| 4 | `/updateUser` | Controller read `req.body` fields but frontend sends `FormData` with file attachment | Added `multer` middleware; reads fields from parsed multipart body |
+| 5 | `/getPaymentChannel` | Missing `CHANNEL_FEE` and `CHANNEL_URL` fields used by `PaymentConfirmation.js` | Added both fields to returned payment channel data |
+| 6 | `/createUserBank` | Controller read `bankCode` but frontend sends `bankId` | Changed destructure to alias `bankId` as `bankCode` |
+| 7 | `/createTransaction` | Controller read `amount` but frontend sends `transactionAmount` | Added fallback: reads `transactionAmount ?? amount` |
+| 8 | `/updateTransaction` | Controller read `transactionRef` but frontend sends `transactionReference` | Changed destructure to alias `transactionReference` as `transactionRef` |
+
+#### Fixes applied later
+
+- Fixed `IMAGE_NAME` values in `/getPaymentChannel` from `card.png`/`bank.png` to `cuePay.png`/`paystack.png` to match actual frontend assets in `src/assets/payment-platforms/`.
+
+- Expanded seed data in `src/projects/mono-web/database/index.ts`:
+  - **3 users**: `demo@castlestash.com` (verified, no 2FA), `jane@castlestash.com` (verified, 2FA enabled), `unverified@castlestash.com` (not verified)
+  - **23 transactions** across verified users (wallet funding, investments, ROI payouts, cash outs)
+  - **5 properties** with detailed descriptions and real Unsplash images
+  - **7 user investments** linking users to properties
+  - **2 saved bank accounts** (GTBank for Demo, Access Bank for Jane)
+  - Demo wallet balance: **₦907,500** (calculated from 12 transactions)
+  - Jane wallet balance: **₦1,020,000** (calculated from 11 transactions)
+
+#### Seed data verification (all endpoints passing)
+
+| Endpoint | Demo User | Jane User |
+|---|---|---|
+| `POST /authentication` | ✅ Login OK | ✅ Login OK (2FA required) |
+| `POST /getUser` | ✅ "Demo User" | ✅ "Jane Smith" |
+| `POST /getBalance` | ✅ ₦907,500 | ✅ ₦1,020,000 |
+| `POST /getTransaction` | ✅ 12 transactions | ✅ 11 transactions |
+| `POST /getInvestmentTransaction` | ✅ 3 investments | ✅ 4 investments |
+| `POST /getUserBank` | ✅ GTBank - 0123456789 | ✅ Access Bank - 0987654321 |
+| `POST /getProperty` | ✅ 5 properties | ✅ 5 properties |
+
+#### Credentials
+
+| User | Email | Password | 2FA |
+|---|---|---|---|
+| Demo | `demo@castlestash.com` | `Password1` | Disabled (logs in directly) |
+| Jane | `jane@castlestash.com` | `Password2` | Required (OTP-based) |
+| Unverified | `unverified@castlestash.com` | `Password1` | — (for testing registration flow) |
+
+#### Next likely work
+
+- Start the Castle Stash client (`npm start` in `mono-web`) and walk through the full user flow: login → dashboard → fund wallet → invest in a property → view transaction history → cash out.
+- For Jane, test the 2FA flow: login → redirected to `/TwoFA-check/CS0000000000002` → enter OTP (returned by `/twoFactorAuth`) → dashboard.
+- The payment gateway selection + confirmation flow POSTs to the demo `CHANNEL_URL` (CuePay/Paystack) — the frontend will submit there but no actual processing occurs; the transaction flow continues on `/account/fund/:transactionID` which calls `/updateTransaction` and shows success/failure.
+
+---
+
+## 2026-06-03
+
+### cap-admin-web (Zeebly Admin) — Full Dummy Backend
+
+Client path: `C:\Users\user\Documents\Programming\Projects\Alerzo\zeebly-admin`
+
+Previously, `cap-admin-web` had only a skeleton GraphQL endpoint. The zeebly-admin client (React 18 + Apollo Client + Socket.IO) uses a completely different set of GraphQL operations. This update adds:
+
+#### Added GraphQL operations for zeebly-admin client
+
+| Category | Operations |
+|---|---|
+| **Auth** | `changeAdminPassword`, `requestAdminPasswordReset`, `validateAdminPasswordResetRequest`, `resetAdminPassword`, `refreshUserToken` |
+| **Dashboard** | `recent_transaction`, `top_centres`, `top_selling_products`, `top_selling_categories`, `transaction_volume`, `transaction_status`, `transaction_volume_per_centre`, `revenue_trend`, `getTotalRepsPartner`, `transaction_status_per_center`, `getDiscountStat`, `getReturnedOrderStat`, `getOrderSaleTargetForAllCenters` |
+| **Inventory** | `getInventory`, `getInventoryById`, `getAdminCatalogueEntity`, `getSapCatelogueDetails`, `getCatelogueDetails` |
+| **Orders** | `getAllOrders`, `getOrderById`, `getOrderStat`, `getOrderInvoice` |
+| **Centres** | `getCentres`, `centre`, `getCentreActiveReps`, `getCentreRepLists`, `getBusinessName`, `getCentreCustomerGroup`, `getCentreTarget` |
+| **Partners** | `getPartners`, `getPartner` |
+| **Reps** | `getRepresentatives`, `representative`, `getRepRoles` |
+| **Settings** | `getAdminUser`, `getAdminUsers`, `getRoles`, `getAllPermissions` |
+| **Notifications** | `getAdminNotification` |
+| **Audit Trail** | `getAdminAuditLogs`, `getPartnerAuditLogs`, `getRepAuditLogs`, `getAdminAuditLog`, `getPartnerAuditLog`, `getRepAuditLog` |
+| **Zeebly Mutations** | `createCentre`, `updateCentre`, `removeCentre`, `createPartner`, `updatePartner`, `deactivatePartner`, `activatePartner`, `createRepresentativeByAdmin`, `adminUpdateRepresentative`, `deactivateRepresentative`, `activateRepresentative`, `removeRepresentative`, `createCatalogue`, `updateCatalogue`, `deleteCatalogue`, `toggleOutOfStock`, `toggleLocked`, `deleteOrder`, `toggleLockedOrder`, `createAdminUser`, `updateAdminUser`, `activateAdminUser`, `deactivateAdminUser`, `updateRole`, `createRole`, `createPermission`, `readNotification` |
+
+#### Added REST API endpoints
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| POST | `/api/upload/upload_products/:productId` | Product image upload |
+| POST | `/api/upload/upload-rebate-discount` | Rebate discount CSV |
+| POST | `/api/upload/upload-target` | Target CSV |
+| POST | `/api/upload/upload_admin_image/:id` | Admin profile image |
+| GET | `/api/upload/download_audit_trail` | Audit trail CSV download |
+| POST | `/api/auth/refresh-token` | Token refresh (Apollo RetryLink) |
+
+#### Added Socket.IO
+
+- Namespace `/cap-admin-web` handles `admin-notify-all` events with acknowledgment callback.
+- The server emits `new-notification` to broadcast delivered notifications.
+
+#### Seeded fixture data
+
+- 3 admin users, 3 roles, 6 permissions, 3 centers, 2 partners, 3 reps, 3 rep roles, 3 seeded orders, 3 inventory items, 5 inventory categories, 5 recent transactions, 10 notifications, audit trail entries.
+
+#### Demo credentials
+
+- Email: `admin@zeebly.com` / any password.
+- `x-token` and `x-refresh-token` response headers set on every GraphQL response.
+- Token refresh via `POST /api/auth/refresh-token` returns new token headers.
+
+#### Verification
+
+- `npm run type:check` — passed.
+- All GraphQL queries and mutations tested and returning correct shapes.
+- REST upload and refresh-token endpoints tested and returning expected responses.
+- Socket.IO namespace registered and ready for client connections.
+
+#### Next likely work
+
+- Start the zeebly-admin client (`npm start` in `zeebly-admin`) and verify full flow: sign-in → dashboard → centers → partners → reps → orders → inventory → notifications (via Socket.IO modal) → audit trail → settings.
+- The client's `REACT_APP_REST_API` is already set to `http://localhost:5050/cap-admin-web/api` — all REST endpoints are ready.
+
+### bible-quiz-platform (A1Quest) — Full REST Dummy Backend
+
+Clients:
+- `a1quest-web` (Next.js 13) at `C:\Users\user\Documents\Programming\Projects\A1Quest\a1quest-web`
+- `a1quest-admin-web` (CRA) at `C:\Users\user\Documents\Programming\Projects\A1Quest\a1quest-admin-web`
+
+Both share the same API base URL: `https://api.a1quest.com/api/v1`.
+
+Backend module: `src/projects/bible-quiz-platform` (base path `/bible-quiz-platform/api/v1`)
+
+#### Database
+
+- 24 SQLite tables with `DROP TABLE IF EXISTS` + `CREATE TABLE IF NOT EXISTS`
+- Bible-themed seed data: 6 users, 3 admins, 3 roles, 13 permissions, 6 classes, 12 topics, 18 sub-topics, 19 lessons, 20 questions, 3 subscription plans, 8 transactions, 8 notifications, 8 achievements, 8 FAQs, 3 feedback entries, 6 leaderboard entries, 7 streaks, 6 enrollments, 3 bookmarks, 3 broadcasts
+
+#### Rewrite — 2026-06-04
+
+Rewrote all controllers and routes to match actual a1quest-web (Next.js) and a1quest-admin-web (CRA) client implementations. The previous implementation had a clean generic scaffold that didn't match the real route paths and response shapes either app expects.
+
+**Changes:**
+
+1. **Auth controller** — Rewrote user auth to match a1quest-web patterns:
+   - `POST /auth/register` — creates user, returns `{ verificationCode }`
+   - `POST /auth/verify-code` / `POST /auth/verify-otp` — accepts `code` or `otp`
+   - `POST /auth/login` — returns `{ success, message, data: { user, token } }` where token is `demo-token-{id}`
+   - `POST /auth/forgot-password`, `POST /auth/reset-password` — includes reset code in response for demo
+   - Admin login returns `{ success, message, data: { admin, token } }`
+
+2. **Learning controller** — Rewrote all 25 `/learning/*` endpoints to match a1quest-web:
+   - All list routes use `POST` (a1quest-web sends POST for everything)
+   - Individual item routes support both `GET /:id` and `POST /` (body-based id)
+   - Quiz system: `POST /learning/take-test` — selects random questions, returns stripped options (no correct answers)
+   - `POST /learning/submit-test/:testId` — grades answers against stored correct options, stores review, updates leaderboard (10 pts/correct)
+   - Progress, bookmarks, enrollments, streaks all wired
+
+3. **Payment controller** — 4 endpoints for plans, transactions, initiate, verify
+
+4. **Reports controller** — `POST /report-analytics`, `GET /user-performance`
+
+5. **Admin CRUD controller** — Full REST CRUD for all entity types:
+   - `GET/POST + GET/PUT/DELETE :id` for classes, topics, sub-topics, lessons, questions, roles, achievements, FAQs, plans, broadcasts, notifications
+   - Users: `GET + GET/DELETE :id`
+   - Transactions: `GET + DELETE :id`
+   - Feedback: `GET /pending-feedbacks + GET/DELETE :id`
+   - Leaderboard: `GET + DELETE /reset`
+   - Dashboard: aggregate stats
+
+6. **Misc controller** — 17 endpoints for FAQs, achievements, leaderboard, notifications, contact, settings, upload, streaks, password/profile CRUD
+
+7. **Routes** — Complete rewrite to match the actual 120+ route paths used by both clients
+
+8. **Multer** — Added `multer.memoryStorage()` middleware for upload endpoints
+
+#### Verified endpoints (2026-06-04)
+
+| Endpoint | Status |
+|---|---|
+| `GET /` | ✅ Health check |
+| `POST /auth/login` | ✅ Returns `{ success, message, data: { user, token } }` |
+| `POST /admin/login` | ✅ Returns admin token |
+| `POST /learning/classes` | ✅ Returns 6 classes |
+| `POST /learning/popular-topics` | ✅ Returns 4 random topics |
+| `GET /faqs` | ✅ Returns 8 FAQs |
+| `GET /achievements` | ✅ Returns 8 achievements |
+| `GET /leaderboard` | ✅ Returns 6 leaderboard entries |
+| `GET / (no error)` | ✅ Type check passes with zero errors |
+
+#### Client `.env` changes — both apps now point to local demo API
+
+- **`a1quest-web`**: Updated `.env` → `NEXT_PUBLIC_API_URL=http://localhost:5050/bible-quiz-platform/api/v1`
+- **`a1quest-admin-web`**: Fixed `.env` → Changed `VITE_` prefix to `REACT_APP_` prefix (CRA requirement), set `REACT_APP_API_URL=http://localhost:5050/bible-quiz-platform/api/v1`
+
+#### Routes aligned to actual client usage
+
+Rewrote `routes/index.ts` and multiple controllers to match the exact paths and shapes used by both apps, instead of a generic scaffold.
+
+**Key user-auth endpoints added/aligned:**
+- `POST /auth/login` → returns token string at `response.data.data` (fix: was returning `{ user, token }` object)
+- `GET /auth/profile`, `POST /auth/profile` — profile read/update
+- `POST /auth/guardian`, `POST /auth/goal` — guardian info and learning goal
+- `GET /auth/classes` → returns string array of class names
+- `GET /auth/countries`, `POST /auth/states` — location data
+- `POST /auth/verify-code` now accepts `{ verificationCode }` field name
+
+**Learning route aliases added (all map to existing handlers):**
+- `/learning/view-classes`, `/learning/view-topics`, `/learning/view-sub-topics`, `/learning/view-lessons` (POST)
+- `/learning/tests/:testId/answers` (for submit), `/learning/tests/:testId/review` (for review)
+- `/learning/track-progress-rate`, `/learning/recent-learning` (POST), `/learning/:topicId/enroll`
+- All original paths also kept for backward compatibility
+
+**Payment endpoints added:**
+- `GET /payment/fetch-subscription-plans`, `POST /payment/choose-subscription-plan`
+- `POST /payment/transaction`, `GET /payment/wallet-balance`, `GET /payment/transaction-history`
+- `POST /payment/transfer`, `GET /payment/fetch-banks`, `POST /payment/verify-bank-account`
+
+**Admin-web specific endpoints added:**
+- Auth: `POST /admin/verify-code`, `POST /admin/resend-code`
+- Dashboard: `GET /admin-dashboard/count`, `/admin-dashboard/recent-users`, `/admin-dashboard/admin-stats`, `/admin-dashboard/classes-stats`
+- CRUD without `/admin/` prefix: all under `/classes`, `/topics`, `/sub-topics`, `/lessons`, `/questions` with `PATCH` instead of `PUT`
+- Admin management: `POST /admin-mgmt/get`, `GET/POST/PATCH/DELETE /admin-mgmt/:id`, `PATCH /roles/assign-to-admin`
+- Users: `POST /users`, `GET /users/:id`, `GET /users/:id/performance`, `/users/:id/topics`, `/users/:id/test-logs`, `PATCH /users/:id/unfreeze-user`
+- Feedback: `GET /admin-contact-us`
+- Broadcasts: `POST /notification-broadcast/get`, `GET /notification-broadcast/:id`, `POST /notification-broadcast`
+- Admin profile: `PATCH /update-self`, `PATCH /auth/update-password`, `POST /auth/verify`, `PATCH /profile-image`
+- Permissions: `GET /roles/permissions`
+- Existing `/admin/*` legacy routes preserved for backward compatibility
+
+#### Fixed database table name mismatch
+
+- Payment controller and admin-crud controller referenced `bq_plans` — actual table is `bq_subscription_plans`
+- `POST /questions` creates now JSON.stringifies `options` array for SQLite storage
+
+#### TypeScript type declaration
+
+- Added `src/types/express.d.ts` extending Express `Request` with `userId` and `adminId` properties
+
+#### Verified
+
+| Endpoint | Status |
+|---|---|
+| `POST /auth/login` | ✅ Returns token string in `data` |
+| `GET /auth/profile` | ✅ Returns full `UserType` |
+| `POST /auth/guardian` | ✅ Updates + returns user |
+| `POST /auth/goal` | ✅ Updates + returns user |
+| `GET /auth/classes` | ✅ Returns `["JS1","JS2",...]` |
+| `GET /auth/countries` | ✅ Returns country data |
+| `POST /learning/view-classes` | ✅ Returns 6 classes |
+| `GET /learning/view-topic/:id` | ✅ Returns mapped topic |
+| `GET /payment/fetch-subscription-plans` | ✅ Returns plans |
+| `GET /leaderboards` | ✅ Returns 6 entries |
+| `POST /admin/login` | ✅ Returns token string |
+| `GET /admin/profile` | ✅ Returns admin object |
+| `GET /admin-dashboard/count` | ✅ Returns aggregate stats |
+| `GET /classes` | ✅ Returns all classes (desc) |
+| `POST /topics/view-topics` | ✅ Returns 13 topics |
+| `POST /questions` with options | ✅ Options JSON.stringified |
+| `POST /admin-mgmt/get` | ✅ Returns 3 admins |
+| `GET /roles/permissions` | ✅ Returns 13 permissions |
+| `npm run type:check` | ✅ Zero errors |
+
+#### Next likely work
+
+1. Start `a1quest-web` (Next.js: `npm run dev`) and walk through: login → dashboard → classes → topics → quizzes → leaderboard → payment flow.
+2. Start `a1quest-admin-web` (CRA: `npm start`) and walk through: admin login → dashboard → CRUD screens for all entities → user management → roles/permissions.
+3. Fix any component-level response shape mismatches discovered during client integration (most likely in nested field names or optional fields).
+
+---
+
+## 2026-06-04 (artisan-services-web)
+
+### artisan-services-web — Full REST Dummy Backend
+
+Client: `C:\Users\user\Documents\Programming\Projects\Keyla\Artisan Services-Frontend` (Next.js)
+
+Backend module: `src/projects/artisan-services-web` (base path `/artisan-services-web`)
+
+#### Rewrite — routes and controllers to match frontend API paths and response shapes
+
+Previously the module had a generic scaffold. This rewrite aligns all 44 endpoints with the frontend's actual axios calls and expected TypeScript types.
+
+**Changes:**
+
+1. **Routes** (`routes/index.ts`) — 44 REST endpoints under `/api/v1/` matching the frontend's axios paths:
+   - Auth: `POST /api/v1/register`, `/login`, `/code/get`, `/code/verify`, `/forgot-password`, `/reset-password`, `/logout`, `GET /api/v1/deactivate`
+   - Profile: `PATCH /api/v1/update`, `/update-password`, `/profile-image`
+   - Artisans: `POST /api/v1/all/artisan`, `GET /api/v1/single/artisan/:id`, `PATCH /api/v1/artisan`, `POST /artisan/photo`, `/artisan/nin`, `/artisan/personal`, `/artisan/business`, `PATCH /artisan/business-hours`, `/artisan/socials`, `GET /single/business-hours/:id`
+   - Portfolio: `POST /api/v1/all/portfolio`, `/artisan/portfolio`, `DELETE /artisan/portfolio/:id`
+   - Booking: `POST /api/v1/user/booking`, `/all/booking`, `GET /single/booking/:id`, `PATCH /user/booking/:id`
+   - Favourite: `POST /api/v1/all/favourite`, `/analytics/favourite`
+   - Rating: `POST /api/v1/all/rating`, `/analytics/rating`
+   - Dispute: `POST /api/v1/all/dispute`, `/dispute`, `/all/dispute-response`, `/dispute-response`
+   - Chat: `POST /api/v1/all/chat`, `/chat`, `GET /chat/highlights`
+   - Notification: `POST /api/v1/all/notification`, `PATCH /notification/update/:id`
+   - Public: `GET /api/v1/no-auth/all/artisan-category`, `POST /api/v1/no-auth/feedback`
+   - Analytics: `POST /api/v1/analytics/views`
+
+2. **Controllers** (`controllers/index.ts`) — All 44 handlers with:
+   - In-memory fixture data (36 artisans, 20 bookings, portfolios, 5 disputes, 30 ratings, 5 favourites, chat messages, business hours, business hours, 10 categories)
+   - SQLite-backed auth (users, notifications)
+   - MongoDB-style `_id` string IDs throughout (e.g., `"artisan-1"`, `"booking-3"`)
+   - Related entities returned as nested objects (e.g., `artisan: { _id, companyName, firstname, ... }` inside bookings)
+   - Paginated list responses wrapped in `{ results: [...] }` for frontend pagination
+   - Demo login accepts `demo@artisanservices.com` / `password`, returns `demo-artisan-services-web-token-{id}`
+
+3. **Database** — Already seeded demo user, addresses, and notifications in `database/index.ts`
+
+#### TypeScript errors fixed
+
+- 14 errors: wrapped arrays in `{ results: [...] }` for all list endpoints to match `sendSuccessFeedback`'s `Record<string, unknown>` signature
+- Fixed invalid SQL in `DeactivateAccount` handler
+- Added `as string` casts for `req.params.id` to fix Express 5 param type inference
+
+#### Verified endpoints
+
+| Endpoint | Status |
+|---|---|
+| `POST /api/v1/login` | ✅ Returns demo user with token |
+| `GET /api/v1/no-auth/all/artisan-category` | ✅ 10 categories with services |
+| `POST /api/v1/all/artisan` | ✅ 36 artisans paginated (12/page) |
+| `GET /api/v1/single/artisan/artisan-1` | ✅ Returns artisan with nested category |
+| `GET /api/v1/single/business-hours/artisan-1` | ✅ Returns weekly schedule |
+| `POST /api/v1/all/booking` | ✅ 20 bookings with nested user/artisan |
+| `POST /api/v1/all/portfolio` | ✅ Filtered by artisan |
+| `GET /api/v1/chat/highlights` | ✅ 5 chat highlights with last messages |
+| `POST /api/v1/all/notification` | ✅ 1 notification (seeded) |
+| `POST /api/v1/all/dispute` | ✅ 5 disputes with nested booking/artisan |
+| `POST /api/v1/all/rating` | ✅ 30 ratings with nested userId |
+| `npm run type:check` | ✅ Zero errors (pre-existing errors in other modules only) |
+
+#### Demo credentials
+
+- Email: `demo@artisanservices.com` / `password`
+- Token format: `demo-artisan-services-web-token-1` (sent as `Authorization: Bearer ...`)
+
+#### Client `.env` (already configured)
+
+- `NEXT_PUBLIC_API_URL=http://localhost:5050/artisan-services-web/api/v1`
+- `NEXT_PUBLIC_ADMIN_API_URL=http://localhost:5050/artisan-services-web`
+
+#### Next likely work
+
+1. Start the artisan-services-web client (`npm run dev`) and walk through: login → browse artisans → view artisan profile → create booking → view bookings → manage chat → notifications → profile settings.
+2. Verify the artisan mode login (`role: "artisan"`) returns the correct additional fields.
+3. Test Socket.IO namespaces `/chat` and `/dispute` — these need server-level Socket.IO setup outside the REST router.
+
+---
+
+## 2026-06-04 — Collective Demo Preparation for 8 Keyla Projects
+
+### Goal
+
+Complete demo mode for all 8 Keyla projects by cross-referencing each frontend's actual API calls against the backend routes and fixing all mismatches. All modules were already anonymized (brand names → descriptive names: `cravings-*`→`food-delivery-*`, `koneqtor-*`→`artisan-services-*`, `landshop-admin`→`real-estate-admin`, `ship-africa-*`→`logistics-*`, `shipplug-client`→`logistics-client`).
+
+### What was done
+
+1. **Cross-reference analysis** — For each of the 8 modules, grepped the frontend source code for all API URLs and compared them against the backend route files. Documented every gap.
+
+2. **Gap fixes applied**:
+   - `food-delivery-admin`: Entire route file rewritten (~100 endpoints) from POST-heavy `save/update/status` convention to frontend's flat POST/PATCH/GET/DELETE patterns. Frontend uses `GET /stat`, `GET /me`, `GET /single/{resource}/:id`, `PATCH /activestatus/{resource}`, `PATCH /update-self`, etc.
+   - `artisan-services-admin`: 2 missing endpoints added (`POST /all/active`, `POST /all/visit`).
+   - `logistics-web`: Login no longer returns `success: true` for invalid credentials — now returns 401 `{ success: false, message: "Invalid email or password" }`.
+   - Remaining 6 modules (food-delivery-web, artisan-services-web, real-estate-admin, logistics-admin, logistics-client) — verified well-aligned.
+
+3. **Verification**:
+   - `npm run type:check` — zero errors
+   - `npm run build` — passes
+   - All 8 login endpoints tested and return seeded demo data
+   - All gap-fix endpoints tested (food-admin GET /stat ✅, GET /me ✅, artisan-admin POST /all/active ✅, POST /all/visit ✅, logistics-web wrong login 401 ✅)
+
+### Route count updates in AGENTS.md
+
+- food-delivery-admin: 58 → ~100
+- food-delivery-web: 43 → 74
+- artisan-services-admin: 49 → 54
+- artisan-services-web: 44 → 47
+- real-estate-admin: 40 → 47
+- logistics-client: 28 → 20
+
+### Remaining cosmetic items
+
+- `food-delivery-admin` route file fixture arrays still reference `@cravings.com` emails (unused by auth, display-only)
+- All 8 frontend `.env`/config files already updated to anonymized URLs
+
+---
+
+## 2026-06-04
+
+### food-delivery-admin — SQLite migration (in-memory → database)
+
+The food-delivery-admin module previously stored all data in in-memory fixture arrays inside the controller and route files. This made the module state non-persistent and the controller file extremely large.
+
+**Changes:**
+
+1. **`database/index.ts`** — Added `CREATE TABLE IF NOT EXISTS` for all 22 domain tables, seeded with the exact same fixture data as the old in-memory arrays:
+   - `food_delivery_admin_users` (5 users), `zones` (5), `restaurants` (6), `vendors` (4), `products` (10), `orders` (6 with JSON items), `banners` (3), `promos` (3), `coupons` (3), `food_types` (6), `delivery_fees` (5), `settings` (single-row JSON), `wallet_transactions` (6), `riders` (6), `notifications` (3), categories, top_vendors, payout_history, customer_orders, subscription, review, complaint.
+   - Demo credentials: `demo@fooddelivery.com` / `password`.
+
+2. **`controllers/index.ts`** — Rewrote all CRUD handlers to use `sqlite.prepare(…)` with `better-sqlite3`. Removed all in-memory arrays (kept only `IMAGES` constant). All handler export names and signatures preserved. Settings stored as JSON blob, converted to key-value array on read. Order items stored as JSON TEXT, parsed on read.
+
+3. **`src/functions/feedback.ts`** — Changed `sendSuccessFeedback` and `sendErrorFeedback` `data` parameter type from `Record<string, unknown>` to `unknown` with internal cast. This allows passing `.get()` results (typed as `unknown` by `better-sqlite3`) directly without explicit casts at every call site. Fully backward compatible.
+
+**Verified:**
+
+| Endpoint | Result |
+|---|---|
+| `POST /admin/v1/login` | ✅ Returns demo user + token |
+| `GET /admin/v1/stat` | ✅ Dashboard stats |
+| `POST /admin/v1/all/user` | ✅ 5 users |
+| `POST /admin/v1/all/zone` | ✅ 5 zones |
+| `POST /admin/v1/all/restaurant` | ✅ 6 restaurants |
+| `POST /admin/v1/all/order` | ✅ 6 orders with parsed items |
+| `POST /admin/v1/all/product` | ✅ 10 products |
+| `POST /admin/v1/save/zone` | ✅ Creates new zone |
+| `POST /admin/v1/status/zone/:id` | ✅ Updates zone status |
+| `POST /admin/v1/single/order/1` | ✅ Returns order with items array |
+| `POST /admin/v1/all/setting` | ✅ 14 settings (from JSON blob) |
+| `POST /admin/v1/delete/zone` | ✅ Deletes zone |
+| `npx tsc --noEmit` | ✅ Zero errors |
+
+### real-estate-admin — SQLite migration (in-memory → database)
+
+**Changes:**
+1. **`database/index.ts`** — Added 11 domain tables (`real_estate_admin_users`, `_properties`, `_developments`, `_investments`, `_transactions`, `_blog_posts`, `_grows`, `_contacts`, `_invoices`, `_reviews`, `_settings`) seeded with all 66 fixture records. Settings stored as single-row JSON blob.
+2. **`controllers/index.ts`** — Removed all 12 in-memory fixture arrays. All 35 handler names/signatures preserved, response shapes identical.
+
+### logistics-admin — SQLite migration (in-memory → database)
+
+**Changes:**
+1. **`database/index.ts`** — Added 12 domain tables (users, parcels, shipments, transactions, contacts, disputes, notifications, team members, shipping pricing, Lagos costs, intra/inter/intl costs). All fixture data from `fixtures.ts` (405 lines) seeded. Shipments stored as JSON blobs for complex nested shapes.
+2. **`controllers/graphql.ts`** — Rewrote all `resolveField` handlers to query SQLite. Removed `./fixtures.js` import.
+3. **`controllers/rest-api.ts`** — Rewrote Login handler to query `logistics_admin_users` table. Inlined dashboard stats.
+4. **`controllers/fixtures.ts`** — Deleted (all data migrated to DB seed).
+
+### logistics-web — SQLite migration (in-memory → database)
+
+**Changes:**
+1. **`database/index.ts`** — Added 11 domain tables (users, parcels, shipments, transactions, notifications, countries, cities, pricing, wallet, business accounts) seeded with all fixture data from `fixtures.ts` (327 lines).
+2. **`controllers/graphql.ts`** — Rewrote all `resolveField` handlers to query SQLite. Removed `./fixtures.js` import.
+3. **`controllers/rest-api.ts`** — Login queries `logistics_web_users` table. `googlePlaceDetailsFixture` inlined.
+4. **`controllers/fixtures.ts`** — Deleted.
+
+### logistics-client — SQLite migration (in-memory arrays → database)
+
+**Changes:**
+1. **`database/index.ts`** — Added `logistics_client_parcels` table, added `data` JSON column to `logistics_client_shipping`. Seeded 3 demo parcels and 3 demo shipments.
+2. **`controllers/index.ts`** — Replaced all in-memory mutable arrays (`packagingData`, `parcelData`, `shipmentData`, `addressData`) with `sqlite.prepare(...)` queries against existing/logistics_client_*` tables. Removed counter variables for auto-increment. Countries/states/cities kept as in-memory constants (reference data, no DB table).
+
+### AGENTS.md update
+
+Added explicit rule to the **Database Rules** section:
+
+> **ALL data must be stored in SQLite tables.** No in-memory fixture arrays in controllers. Controllers must read/write all domain data through `sqlite.prepare(...)` queries. Static reference data (image URLs, country/state/city lists) that is not user-generated may remain as in-memory constants if it has no corresponding DB table. Exception: very simple GraphQL mutation responses that return `{ success: true }` without domain data do not need a DB round-trip.
+
+### Final verification
+
+- `npm run type:check` — zero errors
+- `npm run build` — passes
+- All 8 modules migrate cleanly — no in-memory fixture arrays remain in any controller
+
+---
+
+## 2026-06-04
+
+### event-marketplace-web — GraphQL dummy backend for event marketplace mobile app
+
+Client path: `C:\Users\user\Documents\Programming\Projects\Punch\ocpus-client`
+
+Backend module: `src/projects/event-marketplace-web` (base path `/event-marketplace-web`)
+
+**Note:** Renamed from `ocpus-web` to `event-marketplace-web` for anonymity in public routes, tables, and docs.
+
+#### What was created
+
+- **GraphQL endpoint**: `POST /event-marketplace-web/graphql` — handles ~43 operations (auth, user listings, brands, events CRUD, chat, follow, media, notifications, Stripe payment).
+- Session/cookie-based auth (`credentials: 'include'`).
+- MongoDB-style `_id` string IDs throughout.
+- Response shape: `{ statusCode, success, message, data }` with paginated `{ total, data: [...] }`.
+
+#### Database tables
+
+- `event_marketplace_users` (3 seeded: seller, host, consumer)
+- `event_marketplace_events` (1 demo fashion event)
+- `event_marketplace_messages`, `event_marketplace_conversations` (1 conversation with 1 message)
+- `event_marketplace_notifications` (1 welcome notification)
+- `event_marketplace_media` (2 seeded media items)
+- `event_marketplace_stripe_cards`, `event_marketplace_stripe_banks`, `event_marketplace_stripe_customers` (1 each)
+- `event_marketplace_graphql_events` (operation logging)
+
+#### Demo credentials
+
+- Email: `demo@demo.com` / `password`
+
+#### Client `.env` patch needed
+
+- Change Apollo Client URI from `http://localhost:3030/graphql` to `http://localhost:5050/event-marketplace-web/graphql`
+
+#### Verified
+
+- `npm run type:check` — zero errors
+- Endpoints registered and returning demo data
+
+### freelancer-marketplace-web — GraphQL dummy backend for freelancer marketplace web app
+
+Client path: `C:\Users\user\Documents\Programming\Projects\Punch\zwilt-client`
+
+Backend module: `src/projects/freelancer-marketplace-web` (base path `/freelancer-marketplace-web`)
+
+**Note:** Renamed from `zwilt-web` to `freelancer-marketplace-web` for anonymity in public routes, tables, and docs.
+
+#### What was created
+
+- **GraphQL endpoint**: `POST /freelancer-marketplace-web/graphql` — handles ~60+ operations (auth, homepage, master categories, categories, profile/listings, search, browse, saved lists, chat, notifications, follow, rating).
+- **Social auth redirect endpoints**: `GET /google`, `/facebook`, `/linkedin` — return demo auth codes.
+- Session/cookie-based auth (`credentials: 'include'`).
+- MongoDB-style `_id` string IDs throughout.
+- Response shape: `{ statusCode, success, message, data }`.
+
+#### Database tables
+
+- `freelancer_marketplace_users` (3 seeded freelancers with skills, offerings, experience)
+- `freelancer_marketplace_master_categories` (4: Technology, Design, Writing, Marketing)
+- `freelancer_marketplace_categories` (5: Web Dev, Mobile, Graphic Design, Content, Digital Marketing)
+- `freelancer_marketplace_tags` (10 tags for skills)
+- `freelancer_marketplace_listings` (3 seeded freelancer listings with related work and experience)
+- `freelancer_marketplace_conversations`, `freelancer_marketplace_messages` (1 conversation with 1 message)
+- `freelancer_marketplace_notifications`, `freelancer_marketplace_saved_lists`, `freelancer_marketplace_ratings`, `freelancer_marketplace_browsing_history`
+- `freelancer_marketplace_graphql_events` (operation logging)
+
+#### Demo credentials
+
+- Email: `demo@demo.com` / `password`
+
+#### Client `.env` patch needed
+
+- Change `NEXT_PUBLIC_APP_SERVER` from `http://localhost:5000` to `http://localhost:5050/freelancer-marketplace-web`
+
+#### Verified
+
+- `npm run type:check` — zero errors
+- Endpoints registered and returning demo data
+
+---
+
+## 2026-06-05 � artisan-services-web API audit fixes
+
+### Changes applied
+
+| # | Step | Files changed | Status |
+|---|---|---|---|
+| 1 | **Response envelope fix** - Created `sendListFeedback` helper that returns `data` as array + `results` count at top level, matching frontend expectations. Updated all 11 list endpoints in `artisan-services-web` controllers. | `src/functions/feedback.ts`, `src/projects/artisan-services-web/controllers/index.ts` | ? |
+| 2 | **Reset password field name** - Changed `ResetPassword` controller to read `req.body.code` instead of `req.body.resetToken` (frontend sends `code`). | `src/projects/artisan-services-web/controllers/index.ts` | ? |
+| 3 | **Deactivate URL fix** - Changed `appAxios.get(`deactivate`)` to `appAxios.get('"'"'/deactivate'"'"')` (was missing leading slash, producing `/api/v1deactivate`). | `Koneqtor-Frontend/src/components/artisan-module/settings/sections/Account/DeactivateAccountModal.tsx` | ? |
+| 4 | **Socket.IO namespaces** - Added `artisan-services-web/chat` and `artisan-services-web/dispute` namespaces with event handling for `user:join`, `message`, and `response` broadcast. | `src/index.ts` | ? |
+| 5 | **Google Maps geocoding replacement** - Added `POST /api/v1/geocode` endpoint returning dummy formatted address. Updated frontend `geocodeUserLocation` to call local endpoint instead of `maps.googleapis.com`. | `src/projects/artisan-services-web/routes/index.ts`, `src/projects/artisan-services-web/controllers/index.ts`, `Koneqtor-Frontend/src/functions/userLocation.ts` | ? |
+
+### List endpoints now using sendListFeedback (response shape: `{ success, message, data: [...], results: N }`)
+
+- `POST /api/v1/all/artisan` � paginated with `page`, `totalPages` extras
+- `POST /api/v1/all/portfolio` � filterable by `artisan`
+- `POST /api/v1/all/booking` � paginated
+- `POST /api/v1/all/favourite` � paginated
+- `POST /api/v1/all/rating` � filterable by `artisan`, sorted by date desc
+- `POST /api/v1/all/dispute` � paginated
+- `POST /api/v1/all/dispute-response` � returns empty array
+- `POST /api/v1/all/chat` � filterable by `artisan`, sorted by date desc
+- `GET /api/v1/chat/highlights` � grouped by artisan
+- `POST /api/v1/all/notification` � from SQLite, mapped to expected shape
+- `GET /api/v1/no-auth/all/artisan-category` � public
+
+### Verification
+
+- `npx tsc --noEmit` � zero errors
+- All 5 changes verified via file inspection
+
+### Next likely work
+
+1. Start the artisan-services-web client (`npm run dev` in Koneqtor-Frontend) and walk through:
+   - Login with `demo@demo.com` / `password`
+   - Browse artisans ? view profiles ? create booking ? chat
+   - Dispute flow ? notification management
+2. Verify Socket.IO real-time chat works in both `/chat` and `/dispute` namespaces.

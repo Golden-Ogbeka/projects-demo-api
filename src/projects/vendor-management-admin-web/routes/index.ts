@@ -11,8 +11,8 @@ VendorManagementAdminWebRouter.get("/", (_req, res) => {
     success: true,
     message: "Vendor Management Admin Web dummy backend",
     data: {
-      graphql: "/vendor-management-admin-web/graphql",
-      upload: "/vendor-management-admin-web/upload/media",
+      graphql: "/vendor-management-web/graphql",
+      upload: "/vendor-management-web/upload/media",
       demoLogin: { userName: "demo.admin", password: "password" },
     },
   });

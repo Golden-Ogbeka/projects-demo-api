@@ -41,7 +41,40 @@ POST /example-store/auth/login
 POST /example-store/auth/verify-otp
 GET /external/google-maps/places/search?query=lagos
 POST /external/google-maps/geocode
-```
+POST /mono-web/techmillresource/mono-api/api/authentication
+POST /mono-web/techmillresource/mono-api/api/registration
+POST /mono-web/techmillresource/mono-api/api/registrationVerification
+POST /mono-web/techmillresource/mono-api/api/validateToken
+POST /mono-web/techmillresource/mono-api/api/forgotPassword
+POST /mono-web/techmillresource/mono-api/api/resetPassword
+POST /mono-web/techmillresource/mono-api/api/getUser
+POST /mono-web/techmillresource/mono-api/api/updateUser
+POST /mono-web/techmillresource/mono-api/api/changePassword
+POST /mono-web/techmillresource/mono-api/api/twoFactorAuth
+POST /mono-web/techmillresource/mono-api/api/getBalance
+POST /mono-web/techmillresource/mono-api/api/getTransaction
+POST /mono-web/techmillresource/mono-api/api/getTransactionRange
+POST /mono-web/techmillresource/mono-api/api/getReferenceNo
+POST /mono-web/techmillresource/mono-api/api/getPaymentChannel
+POST /mono-web/techmillresource/mono-api/api/createTransaction
+POST /mono-web/techmillresource/mono-api/api/updateTransaction
+POST /mono-web/techmillresource/mono-api/api/cashOut
+POST /mono-web/techmillresource/mono-api/api/getUserAudit
+POST /mono-web/techmillresource/mono-api/api/getProperty
+POST /mono-web/techmillresource/mono-api/api/createInvestmentTransaction
+POST /mono-web/techmillresource/mono-api/api/getInvestmentTransaction
+POST /mono-web/techmillresource/mono-api/api/getUserBank
+POST /mono-web/techmillresource/mono-api/api/getBank
+POST /mono-web/techmillresource/mono-api/api/createUserBank
+POST /vendor-management-web/graphql
+POST /vendor-management-web/upload/media
+GET /event-marketplace-web
+POST /event-marketplace-web/graphql
+GET /freelancer-marketplace-web
+POST /freelancer-marketplace-web/graphql
+GET /freelancer-marketplace-web/google
+GET /freelancer-marketplace-web/facebook
+GET /freelancer-marketplace-web/linkedin
 
 ## Build
 
@@ -112,6 +145,41 @@ Password: password
 ```
 
 The module responds to GraphQL operations by detecting the requested root fields and returning realistic dummy data for auth, permissions, users, customers, products, orders, warehouses, fleet, sellers, vendors, payments, marketing, and mutation success states.
+
+## Event Marketplace Web
+
+The event marketplace mobile app is wired to:
+
+```text
+GraphQL: http://localhost:5050/event-marketplace-web/graphql
+```
+
+Demo login:
+
+```text
+Email: demo@demo.com
+Password: password
+```
+
+The module responds to GraphQL operations by detecting the requested root fields and returning dummy data for auth, user listings, brands, events CRUD, chat, follow, media upload, notifications, and Stripe payment operations. Auth is session/cookie-based (`credentials: 'include'`).
+
+## Freelancer Marketplace Web
+
+The freelancer marketplace web/mobile app is wired to:
+
+```text
+GraphQL: http://localhost:5050/freelancer-marketplace-web/graphql
+Social auth redirects: GET /freelancer-marketplace-web/google, /freelancer-marketplace-web/facebook, /freelancer-marketplace-web/linkedin
+```
+
+Demo login:
+
+```text
+Email: demo@demo.com
+Password: password
+```
+
+The module responds to ~60+ GraphQL operations covering auth, homepage data, master categories, categories, profile/listings, search, browse, saved lists, chat, notifications, follow, and rating. Social auth redirect endpoints return demo auth codes. Auth is session/cookie-based (`credentials: 'include'`).
 
 ## AI Prompt For Adding A New Dummy Backend
 

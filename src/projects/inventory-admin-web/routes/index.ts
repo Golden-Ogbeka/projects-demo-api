@@ -1,27 +1,20 @@
 import { Router } from "express";
-import { InventoryAdminWebGraphqlController } from "../controllers/graphql.js";
-import { InventoryAdminWebUploadController } from "../controllers/upload.js";
+import { GraphqlController } from "../controllers/graphql.js";
+import { UploadController } from "../controllers/upload.js";
 
 const InventoryAdminWebRouter = Router();
-const GraphqlController = InventoryAdminWebGraphqlController();
-const UploadController = InventoryAdminWebUploadController();
+const Gql = GraphqlController();
+const Upload = UploadController();
 
 InventoryAdminWebRouter.get("/", (_req, res) => {
-  res.json({
-    success: true,
-    message: "Inventory Admin Web dummy backend",
-    data: {
-      graphql: "/inventory-admin-web/graphql",
-      upload: "/inventory-admin-web/upload/media",
-      demoLogin: { userName: "demo", password: "password" },
-    },
-  });
+  res.json({ success: true, message: "inventory-admin-web dummy backend" });
 });
 
-InventoryAdminWebRouter.post("/graphql", GraphqlController.HandleGraphql);
+InventoryAdminWebRouter.post("/graphql", Gql.Handle);
 InventoryAdminWebRouter.get("/graphql", (_req, res) => {
-  res.json({ success: true, message: "POST GraphQL operations to this endpoint." });
+  res.json({ message: "inventory-admin-web GraphQL endpoint ready." });
 });
-InventoryAdminWebRouter.post("/upload/media", UploadController.UploadMedia);
+
+InventoryAdminWebRouter.post("/upload/media", Upload.HandleMultiple);
 
 export default InventoryAdminWebRouter;

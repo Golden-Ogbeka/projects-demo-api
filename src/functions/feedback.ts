@@ -4,13 +4,13 @@ import { Result, ValidationError } from "express-validator";
 export const sendSuccessFeedback = (
   res: Response,
   message: string,
-  data: Record<string, unknown> = {},
+  data: unknown = {},
   status = 200,
 ) => {
   return res.status(status).json({
     success: true,
     message,
-    data,
+    data: data as Record<string, unknown>,
   });
 };
 
@@ -18,12 +18,12 @@ export const sendErrorFeedback = (
   res: Response,
   status: number,
   message: string,
-  data: Record<string, unknown> = {},
+  data: unknown = {},
 ) => {
   return res.status(status).json({
     success: false,
     message,
-    data,
+    data: data as Record<string, unknown>,
   });
 };
 
@@ -33,6 +33,22 @@ export const sendValidationErrorFeedback = (
 ) => {
   return sendErrorFeedback(res, 422, "Validation failed", {
     errors: errors.array(),
+  });
+};
+
+export const sendListFeedback = (
+  res: Response,
+  message: string,
+  items: unknown[],
+  total?: number,
+  extra: Record<string, unknown> = {},
+) => {
+  return res.status(200).json({
+    success: true,
+    message,
+    data: items,
+    results: total ?? items.length,
+    ...extra,
   });
 };
 

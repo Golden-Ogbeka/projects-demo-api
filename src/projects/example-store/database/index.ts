@@ -36,7 +36,7 @@ export const setupExampleStoreDatabase = () => {
       )
       .run({
         name: "Demo Customer",
-        email: "demo@example.com",
+        email: "demo@demo.com",
         password: "password",
       });
   }

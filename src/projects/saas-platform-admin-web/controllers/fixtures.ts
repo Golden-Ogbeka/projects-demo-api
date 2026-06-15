@@ -215,7 +215,7 @@ export const demoUser = {
   fullName: "Demo Admin",
   name: "Demo Admin",
   userName: "demo.admin",
-  email: "demo.admin@alerzo.com",
+  email: "demo@demo.com",
   phoneNumber: "+2348012345678",
   phoneNo: "+2348012345678",
   staffId: "ALZ001",

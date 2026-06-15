@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { sendSuccessFeedback } from "../../../functions/feedback.js";
 
 export const VendorManagementUploadController = () => {
   const UploadMedia = (_req: Request, res: Response) => {

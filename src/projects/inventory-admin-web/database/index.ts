@@ -4,26 +4,21 @@ export const setupInventoryAdminWebDatabase = () => {
   sqlite.exec(`
     CREATE TABLE IF NOT EXISTS inventory_admin_web_graphql_events (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      operationName TEXT,
-      rootFields TEXT,
+      operation_name TEXT,
+      root_fields TEXT NOT NULL,
       variables TEXT,
-      createdAt TEXT DEFAULT (datetime('now'))
-    )
+      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
   `);
 };
 
-export const recordInventoryAdminWebOperation = (
-  operationName: string,
-  rootFields: string[],
-  variables: Record<string, unknown>,
-) => {
-  try {
-    sqlite
-      .prepare(
-        `INSERT INTO inventory_admin_web_graphql_events (operationName, rootFields, variables) VALUES (?, ?, ?)`,
-      )
-      .run(operationName, JSON.stringify(rootFields), JSON.stringify(variables));
-  } catch (_) {
-    // non-fatal
-  }
+export const recordInventoryAdminWebOperation = (operationName: string | undefined, rootFields: string[], variables: unknown) => {
+  sqlite.prepare(`
+    INSERT INTO inventory_admin_web_graphql_events (operation_name, root_fields, variables)
+    VALUES (?, ?, ?)
+  `).run(
+    operationName || null,
+    JSON.stringify(rootFields),
+    variables ? JSON.stringify(variables) : null
+  );
 };
