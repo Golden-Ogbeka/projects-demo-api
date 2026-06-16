@@ -43,18 +43,18 @@ const daysLater = (days: number): string => {
 
 const names = {
   first: [
-    "Chidi", "Ngozi", "Oluwaseun", "Adebayo", "Chinwe", "Emeka",
-    "Funmilayo", "Gboyega", "Hauwa", "Ifeanyi", "Jumoke", "Kelechi",
-    "Lola", "Musa", "Nkechi", "Obinna", "Priscilla", "Quadri",
-    "Rukayat", "Sadiq", "Temitope", "Uche", "Victor", "Wale",
-    "Yetunde", "Zainab", "Chukwudi", "Bolanle", "Damilare", "Ezinne",
+    "John", "Jane", "Bob", "Alice", "Charlie", "Diana",
+    "Frank", "Grace", "Henry", "Ivy", "Jack", "Karen",
+    "Leo", "Maria", "Nathan", "Olivia", "Paul", "Quinn",
+    "Rachel", "Sam", "Tina", "Uma", "Victor", "Wendy",
+    "Xander", "Yara", "Zane", "Ava", "Ben", "Chloe",
   ],
   last: [
-    "Okonkwo", "Adebayo", "Okafor", "Bello", "Chukwu", "Diya",
-    "Ekwueme", "Fashola", "Garba", "Hassan", "Ibrahim", "Jega",
-    "Kalu", "Lawal", "Mbah", "Nwachukwu", "Obasanjo", "Okeke",
-    "Raji", "Sowemimo", "Tijani", "Umar", "Yakubu", "Abubakar",
-    "Bamidele", "Eze",
+    "Doe", "Smith", "Johnson", "Williams", "Brown", "Jones",
+    "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Wilson",
+    "Anderson", "Taylor", "Thomas", "Moore", "Jackson", "Martin",
+    "Lee", "Perez", "Thompson", "White", "Harris", "Sanchez",
+    "Clark", "Ramirez",
   ],
 };
 
@@ -97,7 +97,7 @@ const generateArtisans = () => {
       firstname: fn,
       lastname: ln,
       fullname: `${fn} ${ln}`,
-      email: `${fn.toLowerCase()}.${ln.toLowerCase()}${i}@koneqtor.com`,
+      email: `${fn.toLowerCase()}.${ln.toLowerCase()}${i}@example.com`,
       phone: `080${String(10000000 + i).slice(0, 8)}`,
       companyName: `${fn}'s ${cat.name} Services`,
       companyAddress: `${pick(streets)}, ${pick(locations)}`,
@@ -225,7 +225,7 @@ const generateDisputes = () => {
     disputes.push({
       _id: `dispute-${i}`,
       status: i % 2 === 0 ? "open" : "closed",
-      user: { _id: "user-1", email: "demo@demo.com", firstname: "Demo" },
+      user: { _id: "user-1", email: "demo@example.com", firstname: "Demo" },
       artisan: { _id: b.artisan._id, email: b.artisan.email, firstname: b.artisan.firstname, companyName: b.artisan.companyName },
       createdBy: "user-1",
       booking: { _id: b._id, status: b.status, title: b.title, date: b.date },
@@ -456,10 +456,10 @@ export const ArtisanServicesWebController = () => {
       }
 
       if (!user) {
-        // Allow demo login with any password for demo@demo.com
-        if (identifier === "demo@demo.com" || identifier === "08012345678") {
+        // Allow demo login with any password for demo@example.com
+        if (identifier === "demo@example.com" || identifier === "08012345678") {
           user = sqlite
-            .prepare("SELECT * FROM artisan_services_web_users WHERE email = 'demo@demo.com'")
+            .prepare("SELECT * FROM artisan_services_web_users WHERE email = 'demo@example.com'")
             .get();
         }
       }
@@ -1125,8 +1125,8 @@ export const ArtisanServicesWebController = () => {
       const newDispute = {
         _id: `dispute-new-${Date.now()}`,
         status: "open",
-        user: { _id: userId, email: "demo@demo.com", firstname: "Demo" },
-        artisan: foundBooking ? { _id: foundBooking.artisan._id, email: foundBooking.artisan.email, firstname: foundBooking.artisan.firstname, companyName: foundBooking.artisan.companyName } : { _id: "artisan-1", email: "artisan@koneqtor.com", firstname: "Artisan", companyName: "Artisan Services" },
+        user: { _id: userId, email: "demo@example.com", firstname: "Demo" },
+        artisan: foundBooking ? { _id: foundBooking.artisan._id, email: foundBooking.artisan.email, firstname: foundBooking.artisan.firstname, companyName: foundBooking.artisan.companyName } : { _id: "artisan-1", email: "artisan@example.com", firstname: "Artisan", companyName: "Artisan Services" },
         createdBy: userId,
         booking: foundBooking ? { _id: foundBooking._id, status: foundBooking.status, title: foundBooking.title, date: foundBooking.date } : { _id: booking, status: "pending", title: "Service", date: new Date().toISOString() },
         role: "user",

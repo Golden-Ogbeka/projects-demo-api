@@ -75,7 +75,7 @@ export const setupFoodDeliveryWebDatabase = () => {
      VALUES (@name, @email, @phone, @password, @isVerified)`,
   ).run({
     name: "Demo User",
-    email: "demo@demo.com",
+    email: "demo@example.com",
     phone: "+2348012345678",
     password: "password",
     isVerified: 1,

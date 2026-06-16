@@ -316,7 +316,7 @@ export const FoodDeliveryAdminController = () => {
     try {
       const body = req.body as Row;
       const result = sqlite.prepare("INSERT INTO food_delivery_admin_restaurants (name,email,phone,address,status,rating,image,zoneId,zoneName) VALUES (?,?,?,?,?,?,?,?,?)").run(
-        body.name || "New Restaurant", body.email || "new@restaurant.com", body.phone || "+2348000000000",
+        body.name || "New Restaurant", body.email || "new@example.com", body.phone || "+2348000000000",
         body.address || "Demo Address", "active", 0, IMAGES.restaurant, body.zoneId || 1, body.zoneName || "Ikeja"
       );
       const newItem = sqlite.prepare("SELECT * FROM food_delivery_admin_restaurants WHERE id = ?").get(result.lastInsertRowid);
@@ -1058,7 +1058,7 @@ export const FoodDeliveryAdminController = () => {
     try {
       const body = req.body as Row;
       const result = sqlite.prepare("INSERT INTO food_delivery_admin_riders (name,email,phone,status,zoneId,zoneName,completedOrders,rating,vehicleType,image) VALUES (?,?,?,?,?,?,?,?,?,?)").run(
-        body.name || "New Rider", body.email || "rider@cravings.com", body.phone || "+2348000000000",
+        body.name || "New Rider", body.email || "rider@example.com", body.phone || "+2348000000000",
         "offline", body.zoneId || 1, body.zoneName || "Ikeja", 0, 0,
         body.vehicleType || "motorcycle", IMAGES.rider
       );

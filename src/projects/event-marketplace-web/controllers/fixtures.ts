@@ -17,8 +17,8 @@ const demoProducts: EventMarketplaceProduct[] = [
 ];
 
 const demoBrands: EventMarketplaceBrand[] = [
-  { _id: "brand-1", name: "Demo Fashion House", profileImage: UNSPLASH.brand, address: { address1: "12 Fashion Avenue", countryLabel: "Nigeria", countryCode: "NG", city: "Lagos" }, phoneNumber: "+2348090001111", email: "info@demofashion.com", rating: 4.5, additionalMedia: [UNSPLASH.product1], description: "A demo fashion brand for portfolio walkthrough", products: { total: demoProducts.length, data: demoProducts } },
-  { _id: "brand-2", name: "Demo Luxury Goods", profileImage: UNSPLASH.brand, address: { address1: "8 Luxury Lane", countryLabel: "Nigeria", countryCode: "NG", city: "Abuja" }, phoneNumber: "+2348090002222", email: "contact@demoluxury.com", rating: 4.8, additionalMedia: [UNSPLASH.product2], description: "Premium luxury goods demo brand", products: { total: demoProducts.length, data: demoProducts } },
+  { _id: "brand-1", name: "Demo Fashion House", profileImage: UNSPLASH.brand, address: { address1: "12 Fashion Avenue", countryLabel: "Nigeria", countryCode: "NG", city: "Lagos" }, phoneNumber: "+2348090001111", email: "info@example.com", rating: 4.5, additionalMedia: [UNSPLASH.product1], description: "A demo fashion brand for portfolio walkthrough", products: { total: demoProducts.length, data: demoProducts } },
+  { _id: "brand-2", name: "Demo Luxury Goods", profileImage: UNSPLASH.brand, address: { address1: "8 Luxury Lane", countryLabel: "Nigeria", countryCode: "NG", city: "Abuja" }, phoneNumber: "+2348090002222", email: "contact@example.com", rating: 4.8, additionalMedia: [UNSPLASH.product2], description: "Premium luxury goods demo brand", products: { total: demoProducts.length, data: demoProducts } },
 ];
 
 const getUserFromDb = (_id: string): EventMarketplaceUser | null => {
@@ -207,7 +207,7 @@ export const resolveField = (field: string, variables: Record<string, unknown>):
   }
   if (field === "createCustomer") {
     const args = (variables.args as Record<string, unknown>) || {};
-    return { statusCode: 200, success: true, message: "Customer created", data: { name: (args.name as string) || "Demo Customer", email: (args.email as string) || "demo@demo.com", invoice_prefix: "DEMO-INV" } };
+    return { statusCode: 200, success: true, message: "Customer created", data: { name: (args.name as string) || "Demo Customer", email: (args.email as string) || "demo@example.com", invoice_prefix: "DEMO-INV" } };
   }
   if (field === "createCard") {
     return { statusCode: 200, success: true, message: "Card created", data: { id: "card_new", card: { brand: "Visa", last4: "4242" }, billing_details: { address: { city: "Ibadan", country: "NG", state: "Oyo", line1: "Demo Address" }, name: "Demo Card" } } };

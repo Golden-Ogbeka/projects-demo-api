@@ -128,7 +128,7 @@ export const resolveField = (field: string, variables: Record<string, unknown>):
     return { statusCode: 200, message: "Login successful", data: getUser(row._id) };
   }
   if (field === "createUser") {
-    return { success: true, statusCode: 200, message: "create_password", data: { name: (variables.name as string) || "Demo User", email: (variables.email as string) || "demo@demo.com" } };
+    return { success: true, statusCode: 200, message: "create_password", data: { name: (variables.name as string) || "Demo User", email: (variables.email as string) || "demo@example.com" } };
   }
   if (field === "logout") {
     return { statusCode: 200, message: "Logged out", success: true };
@@ -394,7 +394,7 @@ export const resolveField = (field: string, variables: Record<string, unknown>):
   }
   if (field === "createCategory") {
     const input = variables.categoryInput as Record<string, unknown> || {};
-    return { id: "cat-new", categoryName: input.categoryName as string || "New Category", categoryImg: input.categoryImg as string || "", categoryDescription: input.categoryDescription as string || "", tags: [] };
+    return { id: "cat-new", categoryName: input.categoryName as string || "Demo Category", categoryImg: input.categoryImg as string || "", categoryDescription: input.categoryDescription as string || "", tags: [] };
   }
   if (field === "createMasterCategory") {
     const input = variables.categoryInput as Record<string, unknown> || {};

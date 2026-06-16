@@ -161,11 +161,11 @@ export const setupFoodDeliveryAdminDatabase = () => {
     const riderImg = img("https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=200");
 
     const insertUser = sqlite.prepare("INSERT INTO food_delivery_admin_users (name,email,role,password) VALUES (?,?,?,?)");
-    insertUser.run("Demo Admin", "demo@demo.com", "super_admin", "password");
-    insertUser.run("Chidi Okafor", "chidi@cravings.com", "admin", "password");
-    insertUser.run("Bola Adeyemi", "bola@cravings.com", "manager", "password");
-    insertUser.run("Fatima Usman", "fatima@cravings.com", "support", "password");
-    insertUser.run("Emeka Nwosu", "emeka@cravings.com", "rider_manager", "password");
+    insertUser.run("Demo Admin", "demo@example.com", "super_admin", "password");
+    insertUser.run("John Doe", "chidi@example.com", "admin", "password");
+    insertUser.run("Alice Johnson", "bola@example.com", "manager", "password");
+    insertUser.run("Grace Williams", "fatima@example.com", "support", "password");
+    insertUser.run("Charlie Brown", "emeka@example.com", "rider_manager", "password");
 
     const insertZone = sqlite.prepare("INSERT INTO food_delivery_admin_zones (name,state,status,deliveryFee,riderCount) VALUES (?,?,?,?,?)");
     insertZone.run("Ikeja", "Lagos", "active", 500, 12);
@@ -175,12 +175,12 @@ export const setupFoodDeliveryAdminDatabase = () => {
     insertZone.run("Port Harcourt City", "Rivers", "active", 550, 5);
 
     const insertRest = sqlite.prepare("INSERT INTO food_delivery_admin_restaurants (name,email,phone,address,status,rating,image,zoneId,zoneName) VALUES (?,?,?,?,?,?,?,?,?)");
-    insertRest.run("Chicken Republic", "info@chickenrepublic.com", "+2348010001000", "12 Adeniyi Jones, Ikeja, Lagos", "active", 4.5, restaurantImg, 1, "Ikeja");
-    insertRest.run("Kilimanjaro Restaurant", "info@kilimanjaro.com", "+2348010002000", "7 Ahmadu Bello Way, VI, Lagos", "active", 4.7, restaurantImg, 2, "Victoria Island");
-    insertRest.run("The Place Restaurant", "hello@theplace.ng", "+2348010003000", "42 Ring Road, Ibadan", "active", 4.3, restaurantImg, 3, "Ibadan North");
-    insertRest.run("Sweet Sensation", "info@sweetsensation.com", "+2348010004000", "15 Wuse Zone 4, Abuja", "active", 4.1, restaurantImg, 4, "Garki");
-    insertRest.run("Shawarma Spot NG", "orders@shawarmaspot.ng", "+2348010005000", "88 Azikiwe Road, PH City", "inactive", 4.0, restaurantImg, 5, "Port Harcourt City");
-    insertRest.run("Mama Put Buka", "mamaput@example.com", "+2348010006000", "3 Market Road, Ibadan", "active", 4.8, restaurantImg, 3, "Ibadan North");
+    insertRest.run("Demo Chicken Spot", "info@example.com", "+2348010001000", "12 Adeniyi Jones, Ikeja, Lagos", "active", 4.5, restaurantImg, 1, "Ikeja");
+    insertRest.run("Demo Grill House", "info@example.com", "+2348010002000", "7 Ahmadu Bello Way, VI, Lagos", "active", 4.7, restaurantImg, 2, "Victoria Island");
+    insertRest.run("Demo Place Eatery", "hello@example.com", "+2348010003000", "42 Ring Road, Ibadan", "active", 4.3, restaurantImg, 3, "Ibadan North");
+    insertRest.run("Demo Sweets", "info@example.com", "+2348010004000", "15 Wuse Zone 4, Abuja", "active", 4.1, restaurantImg, 4, "Garki");
+    insertRest.run("Shawarma Spot NG", "orders@example.com", "+2348010005000", "88 Azikiwe Road, PH City", "inactive", 4.0, restaurantImg, 5, "Port Harcourt City");
+    insertRest.run("Demo Kitchen", "mamaput@example.com", "+2348010006000", "3 Market Road, Ibadan", "active", 4.8, restaurantImg, 3, "Ibadan North");
 
     const insertVendor = sqlite.prepare("INSERT INTO food_delivery_admin_vendors (name,email,phone,address,status,productCount,rating) VALUES (?,?,?,?,?,?,?)");
     insertVendor.run("Fresh Foods Supply Ltd", "fresh@example.com", "+2348020001000", "22 Industrial Estate, Ikeja", "active", 45, 4.6);
@@ -189,24 +189,24 @@ export const setupFoodDeliveryAdminDatabase = () => {
     insertVendor.run("Global Food Distributors", "global@example.com", "+2348020004000", "10 Warehouse Road, Abuja", "inactive", 18, 4.2);
 
     const insertProduct = sqlite.prepare("INSERT INTO food_delivery_admin_products (name,restaurantId,restaurantName,price,category,status,image,stock) VALUES (?,?,?,?,?,?,?,?)");
-    insertProduct.run("Jollof Rice & Chicken", 1, "Chicken Republic", 3500, "Main Meals", "active", foodImg, 50);
-    insertProduct.run("Fried Rice & Turkey", 1, "Chicken Republic", 4000, "Main Meals", "active", foodImg, 40);
-    insertProduct.run("Pepperoni Pizza Large", 2, "Kilimanjaro Restaurant", 6500, "Pizza", "active", foodImg, 25);
+    insertProduct.run("Jollof Rice & Chicken", 1, "Demo Chicken Spot", 3500, "Main Meals", "active", foodImg, 50);
+    insertProduct.run("Fried Rice & Turkey", 1, "Demo Chicken Spot", 4000, "Main Meals", "active", foodImg, 40);
+    insertProduct.run("Pepperoni Pizza Large", 2, "Demo Grill House", 6500, "Pizza", "active", foodImg, 25);
     insertProduct.run("Chicken Shawarma Wrap", 5, "Shawarma Spot NG", 2800, "Fast Food", "active", foodImg, 35);
-    insertProduct.run("Pounded Yam & Egusi Soup", 6, "Mama Put Buka", 3200, "Local Dishes", "active", foodImg, 30);
-    insertProduct.run("Banga Rice & Catfish", 6, "Mama Put Buka", 3500, "Local Dishes", "active", foodImg, 20);
-    insertProduct.run("Grilled Chicken Half", 3, "The Place Restaurant", 5500, "Grills", "active", foodImg, 15);
-    insertProduct.run("Chicken Burger Meal", 4, "Sweet Sensation", 3800, "Fast Food", "active", foodImg, 28);
-    insertProduct.run("Pepper Soup (Catfish)", 3, "The Place Restaurant", 4500, "Soups", "active", foodImg, 18);
+    insertProduct.run("Pounded Yam & Egusi Soup", 6, "Demo Kitchen", 3200, "Local Dishes", "active", foodImg, 30);
+    insertProduct.run("Banga Rice & Catfish", 6, "Demo Kitchen", 3500, "Local Dishes", "active", foodImg, 20);
+    insertProduct.run("Grilled Chicken Half", 3, "Demo Place Eatery", 5500, "Grills", "active", foodImg, 15);
+    insertProduct.run("Chicken Burger Meal", 4, "Demo Sweets", 3800, "Fast Food", "active", foodImg, 28);
+    insertProduct.run("Pepper Soup (Catfish)", 3, "Demo Place Eatery", 4500, "Soups", "active", foodImg, 18);
     insertProduct.run("Suya Platter", 5, "Shawarma Spot NG", 5000, "Grills", "active", foodImg, 12);
 
     const insertOrder = sqlite.prepare("INSERT INTO food_delivery_admin_orders (orderNumber,customerName,customerPhone,restaurantId,restaurantName,totalAmount,deliveryFee,status,paymentStatus,zone,riderId,riderName,createdAt,items) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-    insertOrder.run("ORD-1001", "Tunde Bakare", "+2348030001001", 1, "Chicken Republic", 7500, 500, "delivered", "paid", "Ikeja", 1, "Musa Bello", "2026-06-01T10:30:00.000Z", JSON.stringify([{ productId: 1, productName: "Jollof Rice & Chicken", qty: 1, price: 3500 }, { productId: 2, productName: "Fried Rice & Turkey", qty: 1, price: 4000 }]));
-    insertOrder.run("ORD-1002", "Amina Suleiman", "+2348030002002", 2, "Kilimanjaro Restaurant", 6500, 800, "preparing", "paid", "Victoria Island", null, null, "2026-06-02T12:15:00.000Z", JSON.stringify([{ productId: 3, productName: "Pepperoni Pizza Large", qty: 1, price: 6500 }]));
-    insertOrder.run("ORD-1003", "Chisom Eze", "+2348030003003", 6, "Mama Put Buka", 6700, 400, "pending", "unpaid", "Ibadan North", null, null, "2026-06-02T14:00:00.000Z", JSON.stringify([{ productId: 5, productName: "Pounded Yam & Egusi Soup", qty: 1, price: 3200 }, { productId: 6, productName: "Banga Rice & Catfish", qty: 1, price: 3500 }]));
-    insertOrder.run("ORD-1004", "Kunle Ogun", "+2348030004004", 5, "Shawarma Spot NG", 2800, 550, "assigned", "paid", "Port Harcourt City", 2, "Emeka Obi", "2026-06-02T09:45:00.000Z", JSON.stringify([{ productId: 4, productName: "Chicken Shawarma Wrap", qty: 1, price: 2800 }]));
-    insertOrder.run("ORD-1005", "Ngozi Okonkwo", "+2348030005005", 3, "The Place Restaurant", 10000, 400, "delivered", "paid", "Ibadan North", 3, "Taiwo Akin", "2026-06-01T18:00:00.000Z", JSON.stringify([{ productId: 7, productName: "Grilled Chicken Half", qty: 1, price: 5500 }, { productId: 9, productName: "Pepper Soup (Catfish)", qty: 1, price: 4500 }]));
-    insertOrder.run("ORD-1006", "Yetunde Lawal", "+2348030006006", 4, "Sweet Sensation", 3800, 600, "cancelled", "refunded", "Garki", null, null, "2026-05-31T16:20:00.000Z", JSON.stringify([{ productId: 8, productName: "Chicken Burger Meal", qty: 1, price: 3800 }]));
+    insertOrder.run("ORD-1001", "Frank Miller", "+2348030001001", 1, "Demo Chicken Spot", 7500, 500, "delivered", "paid", "Ikeja", 1, "John Rider", "2026-06-01T10:30:00.000Z", JSON.stringify([{ productId: 1, productName: "Jollof Rice & Chicken", qty: 1, price: 3500 }, { productId: 2, productName: "Fried Rice & Turkey", qty: 1, price: 4000 }]));
+    insertOrder.run("ORD-1002", "Helen Davis", "+2348030002002", 2, "Demo Grill House", 6500, 800, "preparing", "paid", "Victoria Island", null, null, "2026-06-02T12:15:00.000Z", JSON.stringify([{ productId: 3, productName: "Pepperoni Pizza Large", qty: 1, price: 6500 }]));
+    insertOrder.run("ORD-1003", "Ivy Moore", "+2348030003003", 6, "Demo Kitchen", 6700, 400, "pending", "unpaid", "Ibadan North", null, null, "2026-06-02T14:00:00.000Z", JSON.stringify([{ productId: 5, productName: "Pounded Yam & Egusi Soup", qty: 1, price: 3200 }, { productId: 6, productName: "Banga Rice & Catfish", qty: 1, price: 3500 }]));
+    insertOrder.run("ORD-1004", "Jack Taylor", "+2348030004004", 5, "Shawarma Spot NG", 2800, 550, "assigned", "paid", "Port Harcourt City", 2, "Bob Courier", "2026-06-02T09:45:00.000Z", JSON.stringify([{ productId: 4, productName: "Chicken Shawarma Wrap", qty: 1, price: 2800 }]));
+    insertOrder.run("ORD-1005", "Karen Anderson", "+2348030005005", 3, "Demo Place Eatery", 10000, 400, "delivered", "paid", "Ibadan North", 3, "Alice Driver", "2026-06-01T18:00:00.000Z", JSON.stringify([{ productId: 7, productName: "Grilled Chicken Half", qty: 1, price: 5500 }, { productId: 9, productName: "Pepper Soup (Catfish)", qty: 1, price: 4500 }]));
+    insertOrder.run("ORD-1006", "Laura Thomas", "+2348030006006", 4, "Demo Sweets", 3800, 600, "cancelled", "refunded", "Garki", null, null, "2026-05-31T16:20:00.000Z", JSON.stringify([{ productId: 8, productName: "Chicken Burger Meal", qty: 1, price: 3800 }]));
 
     const insertBanner = sqlite.prepare("INSERT INTO food_delivery_admin_banners (title,image,status,link,startDate,endDate,createdAt) VALUES (?,?,?,?,?,?,?)");
     insertBanner.run("Summer Special - 20% Off", bannerImg, "active", "/promos/summer", "2026-06-01T00:00:00.000Z", "2026-06-30T23:59:59.000Z", "2026-05-25T10:00:00.000Z");
@@ -246,7 +246,7 @@ export const setupFoodDeliveryAdminDatabase = () => {
       deliveryRadiusKm: 20,
       maxOrderItems: 20,
       minOrderAmount: 500,
-      supportEmail: "support@cravingsng.com",
+      supportEmail: "support@example.com",
       supportPhone: "+2349000000000",
       oneSignalAppId: "demo-onesignal-app-id",
       enableGuestCheckout: true,
@@ -264,12 +264,12 @@ export const setupFoodDeliveryAdminDatabase = () => {
     insertWallet.run("order_payment", "Payment for order ORD-1004", 2800, 56, 2744, "pending", "TXN-006", "2026-06-02T09:50:00.000Z");
 
     const insertRider = sqlite.prepare("INSERT INTO food_delivery_admin_riders (name,email,phone,status,zoneId,zoneName,completedOrders,rating,vehicleType,image) VALUES (?,?,?,?,?,?,?,?,?,?)");
-    insertRider.run("Musa Bello", "musa@cravings.com", "+2348050001001", "online", 1, "Ikeja", 345, 4.8, "motorcycle", riderImg);
-    insertRider.run("Emeka Obi", "emeka@cravings.com", "+2348050002002", "busy", 5, "Port Harcourt City", 212, 4.6, "motorcycle", riderImg);
-    insertRider.run("Taiwo Akin", "taiwo@cravings.com", "+2348050003003", "online", 3, "Ibadan North", 178, 4.9, "bicycle", riderImg);
-    insertRider.run("Chinedu Okeke", "chinedu@cravings.com", "+2348050004004", "offline", 2, "Victoria Island", 290, 4.5, "motorcycle", riderImg);
-    insertRider.run("Aisha Mohammed", "aisha@cravings.com", "+2348050005005", "online", 4, "Garki", 156, 4.7, "motorcycle", riderImg);
-    insertRider.run("Segun Adewale", "segun@cravings.com", "+2348050006006", "busy", 1, "Ikeja", 98, 4.3, "motorcycle", riderImg);
+    insertRider.run("John Rider", "musa@example.com", "+2348050001001", "online", 1, "Ikeja", 345, 4.8, "motorcycle", riderImg);
+    insertRider.run("Bob Courier", "emeka@example.com", "+2348050002002", "busy", 5, "Port Harcourt City", 212, 4.6, "motorcycle", riderImg);
+    insertRider.run("Alice Driver", "taiwo@example.com", "+2348050003003", "online", 3, "Ibadan North", 178, 4.9, "bicycle", riderImg);
+    insertRider.run("Charlie Delivery", "chinedu@example.com", "+2348050004004", "offline", 2, "Victoria Island", 290, 4.5, "motorcycle", riderImg);
+    insertRider.run("Diana Logistics", "aisha@example.com", "+2348050005005", "online", 4, "Garki", 156, 4.7, "motorcycle", riderImg);
+    insertRider.run("Frank Transporter", "segun@example.com", "+2348050006006", "busy", 1, "Ikeja", 98, 4.3, "motorcycle", riderImg);
 
     const insertNotif = sqlite.prepare("INSERT INTO food_delivery_admin_notifications (title,message,type,audience,status,createdAt) VALUES (?,?,?,?,?,?)");
     insertNotif.run("New Order #ORD-1004", "A new order has been placed", "order", "all", "unread", "2026-06-02T09:45:00.000Z");
@@ -287,11 +287,11 @@ export const setupFoodDeliveryAdminDatabase = () => {
     sqlite.prepare("INSERT INTO food_delivery_admin_payout_history (vendorId,vendorName,amount,status,reference,createdAt) VALUES (?,?,?,?,?,?)").run(1, "Fresh Foods Supply Ltd", 425000, "completed", "POUT-001", "2026-06-01T00:00:00.000Z");
     sqlite.prepare("INSERT INTO food_delivery_admin_payout_history (vendorId,vendorName,amount,status,reference,createdAt) VALUES (?,?,?,?,?,?)").run(2, "Prime Produce Nigeria", 312000, "pending", "POUT-002", "2026-06-02T00:00:00.000Z");
 
-    sqlite.prepare("INSERT INTO food_delivery_admin_customer_orders (customerName,customerEmail,customerPhone,totalAmount,status,createdAt) VALUES (?,?,?,?,?,?)").run("Tunde Bakare", "tunde@example.com", "+2348030001001", 7500, "delivered", "2026-06-01T10:30:00.000Z");
-    sqlite.prepare("INSERT INTO food_delivery_admin_customer_orders (customerName,customerEmail,customerPhone,totalAmount,status,createdAt) VALUES (?,?,?,?,?,?)").run("Amina Suleiman", "amina@example.com", "+2348030002002", 6500, "preparing", "2026-06-02T12:15:00.000Z");
+    sqlite.prepare("INSERT INTO food_delivery_admin_customer_orders (customerName,customerEmail,customerPhone,totalAmount,status,createdAt) VALUES (?,?,?,?,?,?)").run("Frank Miller", "tunde@example.com", "+2348030001001", 7500, "delivered", "2026-06-01T10:30:00.000Z");
+    sqlite.prepare("INSERT INTO food_delivery_admin_customer_orders (customerName,customerEmail,customerPhone,totalAmount,status,createdAt) VALUES (?,?,?,?,?,?)").run("Helen Davis", "amina@example.com", "+2348030002002", 6500, "preparing", "2026-06-02T12:15:00.000Z");
 
-    sqlite.prepare("INSERT INTO food_delivery_admin_subscription (planName,customerEmail,amount,status,startDate,endDate,createdAt) VALUES (?,?,?,?,?,?,?)").run("Monthly Premium", "vendor@cravings.com", 15000, "active", "2026-06-01T00:00:00.000Z", "2026-07-01T00:00:00.000Z", "2026-06-01T00:00:00.000Z");
-    sqlite.prepare("INSERT INTO food_delivery_admin_subscription (planName,customerEmail,amount,status,startDate,endDate,createdAt) VALUES (?,?,?,?,?,?,?)").run("Annual Basic", "restaurant@cravings.com", 100000, "active", "2026-01-01T00:00:00.000Z", "2027-01-01T00:00:00.000Z", "2026-01-01T00:00:00.000Z");
+    sqlite.prepare("INSERT INTO food_delivery_admin_subscription (planName,customerEmail,amount,status,startDate,endDate,createdAt) VALUES (?,?,?,?,?,?,?)").run("Monthly Premium", "vendor@example.com", 15000, "active", "2026-06-01T00:00:00.000Z", "2026-07-01T00:00:00.000Z", "2026-06-01T00:00:00.000Z");
+    sqlite.prepare("INSERT INTO food_delivery_admin_subscription (planName,customerEmail,amount,status,startDate,endDate,createdAt) VALUES (?,?,?,?,?,?,?)").run("Annual Basic", "restaurant@example.com", 100000, "active", "2026-01-01T00:00:00.000Z", "2027-01-01T00:00:00.000Z", "2026-01-01T00:00:00.000Z");
 
     sqlite.prepare("INSERT INTO food_delivery_admin_review (name,email,message,rating,createdAt) VALUES (?,?,?,?,?)").run("John Doe", "john@example.com", "Great service!", 5, "2026-06-01T10:00:00.000Z");
     sqlite.prepare("INSERT INTO food_delivery_admin_review (name,email,message,rating,createdAt) VALUES (?,?,?,?,?)").run("Jane Smith", "jane@example.com", "Fast delivery and good food", 4, "2026-06-02T12:00:00.000Z");

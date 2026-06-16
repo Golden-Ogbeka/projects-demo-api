@@ -10,7 +10,7 @@ EventMarketplaceRouter.get("/", (_req, res) => {
     message: "Event Marketplace dummy backend",
     data: {
       graphql: "/event-marketplace-web/graphql",
-      demoLogin: { email: "demo@demo.com", password: "password" },
+      demoLogin: { email: "demo@example.com", password: "password" },
     },
   });
 });

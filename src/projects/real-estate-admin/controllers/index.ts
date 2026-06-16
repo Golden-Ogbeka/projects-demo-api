@@ -183,14 +183,14 @@ export const RealEstateAdminController = () => {
   const Login = async (req: Request, res: Response) => {
     try {
       const { email, password } = req.body || {};
-      if (email === "demo@demo.com" && password === "password") {
+      if (email === "demo@example.com" && password === "password") {
         return respond(res, "Login successful", {
           jwt: { token: "demo-token-1", expiresIn: "24h", token_type: "Bearer" },
           user: {
             _id: 1,
             first_name: "Demo",
             last_name: "Admin",
-            email: "demo@demo.com",
+            email: "demo@example.com",
             phone_number: "+2349000000000",
             created_at: "2026-01-01T00:00:00.000Z",
           },

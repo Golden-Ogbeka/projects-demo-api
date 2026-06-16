@@ -151,7 +151,7 @@ const REVIEWS = [
 const VENDOR = {
   id: 1,
   name: "Mama Cass Kitchen",
-  email: "vendor@cravings.com",
+  email: "vendor@example.com",
   phone: "08091234567",
   password: "password",
   restaurantId: 1,

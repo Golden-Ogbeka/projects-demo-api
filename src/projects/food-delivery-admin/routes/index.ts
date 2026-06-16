@@ -16,22 +16,22 @@ const Ctrl = FoodDeliveryAdminController();
 
 // ---- shared demo data for inline routes ----
 const demoAdmins = [
-  { id: 1, name: "Demo Admin", email: "demo@demo.com", role: "super_admin" },
+  { id: 1, name: "Demo Admin", email: "demo@example.com", role: "super_admin" },
 ];
 const demoUsers = [
-  { id: 1, name: "Demo Admin", email: "demo@demo.com", role: "super_admin" },
-  { id: 2, name: "Chidi Okafor", email: "chidi@cravings.com", role: "admin" },
-  { id: 3, name: "Bola Adeyemi", email: "bola@cravings.com", role: "manager" },
-  { id: 4, name: "Fatima Usman", email: "fatima@cravings.com", role: "support" },
-  { id: 5, name: "Emeka Nwosu", email: "emeka@cravings.com", role: "rider_manager" },
+  { id: 1, name: "Demo Admin", email: "demo@example.com", role: "super_admin" },
+  { id: 2, name: "John Doe", email: "chidi@example.com", role: "admin" },
+  { id: 3, name: "Alice Johnson", email: "bola@example.com", role: "manager" },
+  { id: 4, name: "Grace Williams", email: "fatima@example.com", role: "support" },
+  { id: 5, name: "Charlie Brown", email: "emeka@example.com", role: "rider_manager" },
 ];
 const demoRestaurants = [
-  { id: 1, name: "Chicken Republic", email: "info@chickenrepublic.com", phone: "+2348010001000", address: "12 Adeniyi Jones, Ikeja, Lagos", status: "active", rating: 4.5, zoneId: 1, zoneName: "Ikeja" },
-  { id: 2, name: "Kilimanjaro Restaurant", email: "info@kilimanjaro.com", phone: "+2348010002000", address: "7 Ahmadu Bello Way, VI, Lagos", status: "active", rating: 4.7, zoneId: 2, zoneName: "Victoria Island" },
-  { id: 3, name: "The Place Restaurant", email: "hello@theplace.ng", phone: "+2348010003000", address: "42 Ring Road, Ibadan", status: "active", rating: 4.3, zoneId: 3, zoneName: "Ibadan North" },
-  { id: 4, name: "Sweet Sensation", email: "info@sweetsensation.com", phone: "+2348010004000", address: "15 Wuse Zone 4, Abuja", status: "active", rating: 4.1, zoneId: 4, zoneName: "Garki" },
-  { id: 5, name: "Shawarma Spot NG", email: "orders@shawarmaspot.ng", phone: "+2348010005000", address: "88 Azikiwe Road, PH City", status: "inactive", rating: 4.0, zoneId: 5, zoneName: "Port Harcourt City" },
-  { id: 6, name: "Mama Put Buka", email: "mamaput@example.com", phone: "+2348010006000", address: "3 Market Road, Ibadan", status: "active", rating: 4.8, zoneId: 3, zoneName: "Ibadan North" },
+  { id: 1, name: "Demo Chicken Spot", email: "info@example.com", phone: "+2348010001000", address: "12 Adeniyi Jones, Ikeja, Lagos", status: "active", rating: 4.5, zoneId: 1, zoneName: "Ikeja" },
+  { id: 2, name: "Demo Grill House", email: "info@example.com", phone: "+2348010002000", address: "7 Ahmadu Bello Way, VI, Lagos", status: "active", rating: 4.7, zoneId: 2, zoneName: "Victoria Island" },
+  { id: 3, name: "Demo Place Eatery", email: "hello@example.com", phone: "+2348010003000", address: "42 Ring Road, Ibadan", status: "active", rating: 4.3, zoneId: 3, zoneName: "Ibadan North" },
+  { id: 4, name: "Demo Sweets", email: "info@example.com", phone: "+2348010004000", address: "15 Wuse Zone 4, Abuja", status: "active", rating: 4.1, zoneId: 4, zoneName: "Garki" },
+  { id: 5, name: "Shawarma Spot NG", email: "orders@example.com", phone: "+2348010005000", address: "88 Azikiwe Road, PH City", status: "inactive", rating: 4.0, zoneId: 5, zoneName: "Port Harcourt City" },
+  { id: 6, name: "Demo Kitchen", email: "mamaput@example.com", phone: "+2348010006000", address: "3 Market Road, Ibadan", status: "active", rating: 4.8, zoneId: 3, zoneName: "Ibadan North" },
 ];
 const demoVendors = [
   { id: 1, name: "Fresh Foods Supply Ltd", email: "fresh@example.com", phone: "+2348020001000", address: "22 Industrial Estate, Ikeja", status: "active", productCount: 45, rating: 4.6 },
@@ -40,24 +40,24 @@ const demoVendors = [
   { id: 4, name: "Global Food Distributors", email: "global@example.com", phone: "+2348020004000", address: "10 Warehouse Road, Abuja", status: "inactive", productCount: 18, rating: 4.2 },
 ];
 const demoProducts = [
-  { id: 1, name: "Jollof Rice & Chicken", restaurantId: 1, restaurantName: "Chicken Republic", price: 3500, category: "Main Meals", status: "active", stock: 50 },
-  { id: 2, name: "Fried Rice & Turkey", restaurantId: 1, restaurantName: "Chicken Republic", price: 4000, category: "Main Meals", status: "active", stock: 40 },
-  { id: 3, name: "Pepperoni Pizza Large", restaurantId: 2, restaurantName: "Kilimanjaro Restaurant", price: 6500, category: "Pizza", status: "active", stock: 25 },
+  { id: 1, name: "Jollof Rice & Chicken", restaurantId: 1, restaurantName: "Demo Chicken Spot", price: 3500, category: "Main Meals", status: "active", stock: 50 },
+  { id: 2, name: "Fried Rice & Turkey", restaurantId: 1, restaurantName: "Demo Chicken Spot", price: 4000, category: "Main Meals", status: "active", stock: 40 },
+  { id: 3, name: "Pepperoni Pizza Large", restaurantId: 2, restaurantName: "Demo Grill House", price: 6500, category: "Pizza", status: "active", stock: 25 },
   { id: 4, name: "Chicken Shawarma Wrap", restaurantId: 5, restaurantName: "Shawarma Spot NG", price: 2800, category: "Fast Food", status: "active", stock: 35 },
-  { id: 5, name: "Pounded Yam & Egusi Soup", restaurantId: 6, restaurantName: "Mama Put Buka", price: 3200, category: "Local Dishes", status: "active", stock: 30 },
-  { id: 6, name: "Banga Rice & Catfish", restaurantId: 6, restaurantName: "Mama Put Buka", price: 3500, category: "Local Dishes", status: "active", stock: 20 },
-  { id: 7, name: "Grilled Chicken Half", restaurantId: 3, restaurantName: "The Place Restaurant", price: 5500, category: "Grills", status: "active", stock: 15 },
-  { id: 8, name: "Chicken Burger Meal", restaurantId: 4, restaurantName: "Sweet Sensation", price: 3800, category: "Fast Food", status: "active", stock: 28 },
-  { id: 9, name: "Pepper Soup (Catfish)", restaurantId: 3, restaurantName: "The Place Restaurant", price: 4500, category: "Soups", status: "active", stock: 18 },
+  { id: 5, name: "Pounded Yam & Egusi Soup", restaurantId: 6, restaurantName: "Demo Kitchen", price: 3200, category: "Local Dishes", status: "active", stock: 30 },
+  { id: 6, name: "Banga Rice & Catfish", restaurantId: 6, restaurantName: "Demo Kitchen", price: 3500, category: "Local Dishes", status: "active", stock: 20 },
+  { id: 7, name: "Grilled Chicken Half", restaurantId: 3, restaurantName: "Demo Place Eatery", price: 5500, category: "Grills", status: "active", stock: 15 },
+  { id: 8, name: "Chicken Burger Meal", restaurantId: 4, restaurantName: "Demo Sweets", price: 3800, category: "Fast Food", status: "active", stock: 28 },
+  { id: 9, name: "Pepper Soup (Catfish)", restaurantId: 3, restaurantName: "Demo Place Eatery", price: 4500, category: "Soups", status: "active", stock: 18 },
   { id: 10, name: "Suya Platter", restaurantId: 5, restaurantName: "Shawarma Spot NG", price: 5000, category: "Grills", status: "active", stock: 12 },
 ];
 const demoOrders = [
-  { id: 1, orderNumber: "ORD-1001", customerName: "Tunde Bakare", customerPhone: "+2348030001001", restaurantId: 1, restaurantName: "Chicken Republic", totalAmount: 7500, deliveryFee: 500, status: "delivered", paymentStatus: "paid", zone: "Ikeja", riderId: 1, riderName: "Musa Bello", createdAt: "2026-06-01T10:30:00.000Z", items: [{ productId: 1, productName: "Jollof Rice & Chicken", qty: 1, price: 3500 }, { productId: 2, productName: "Fried Rice & Turkey", qty: 1, price: 4000 }] },
-  { id: 2, orderNumber: "ORD-1002", customerName: "Amina Suleiman", customerPhone: "+2348030002002", restaurantId: 2, restaurantName: "Kilimanjaro Restaurant", totalAmount: 6500, deliveryFee: 800, status: "preparing", paymentStatus: "paid", zone: "Victoria Island", riderId: null, riderName: null, createdAt: "2026-06-02T12:15:00.000Z", items: [{ productId: 3, productName: "Pepperoni Pizza Large", qty: 1, price: 6500 }] },
-  { id: 3, orderNumber: "ORD-1003", customerName: "Chisom Eze", customerPhone: "+2348030003003", restaurantId: 6, restaurantName: "Mama Put Buka", totalAmount: 6700, deliveryFee: 400, status: "pending", paymentStatus: "unpaid", zone: "Ibadan North", riderId: null, riderName: null, createdAt: "2026-06-02T14:00:00.000Z", items: [{ productId: 5, productName: "Pounded Yam & Egusi Soup", qty: 1, price: 3200 }, { productId: 6, productName: "Banga Rice & Catfish", qty: 1, price: 3500 }] },
-  { id: 4, orderNumber: "ORD-1004", customerName: "Kunle Ogun", customerPhone: "+2348030004004", restaurantId: 5, restaurantName: "Shawarma Spot NG", totalAmount: 2800, deliveryFee: 550, status: "assigned", paymentStatus: "paid", zone: "Port Harcourt City", riderId: 2, riderName: "Emeka Obi", createdAt: "2026-06-02T09:45:00.000Z", items: [{ productId: 4, productName: "Chicken Shawarma Wrap", qty: 1, price: 2800 }] },
-  { id: 5, orderNumber: "ORD-1005", customerName: "Ngozi Okonkwo", customerPhone: "+2348030005005", restaurantId: 3, restaurantName: "The Place Restaurant", totalAmount: 10000, deliveryFee: 400, status: "delivered", paymentStatus: "paid", zone: "Ibadan North", riderId: 3, riderName: "Taiwo Akin", createdAt: "2026-06-01T18:00:00.000Z", items: [{ productId: 7, productName: "Grilled Chicken Half", qty: 1, price: 5500 }, { productId: 9, productName: "Pepper Soup (Catfish)", qty: 1, price: 4500 }] },
-  { id: 6, orderNumber: "ORD-1006", customerName: "Yetunde Lawal", customerPhone: "+2348030006006", restaurantId: 4, restaurantName: "Sweet Sensation", totalAmount: 3800, deliveryFee: 600, status: "cancelled", paymentStatus: "refunded", zone: "Garki", riderId: null, riderName: null, createdAt: "2026-05-31T16:20:00.000Z", items: [{ productId: 8, productName: "Chicken Burger Meal", qty: 1, price: 3800 }] },
+  { id: 1, orderNumber: "ORD-1001", customerName: "Frank Miller", customerPhone: "+2348030001001", restaurantId: 1, restaurantName: "Demo Chicken Spot", totalAmount: 7500, deliveryFee: 500, status: "delivered", paymentStatus: "paid", zone: "Ikeja", riderId: 1, riderName: "John Rider", createdAt: "2026-06-01T10:30:00.000Z", items: [{ productId: 1, productName: "Jollof Rice & Chicken", qty: 1, price: 3500 }, { productId: 2, productName: "Fried Rice & Turkey", qty: 1, price: 4000 }] },
+  { id: 2, orderNumber: "ORD-1002", customerName: "Helen Davis", customerPhone: "+2348030002002", restaurantId: 2, restaurantName: "Demo Grill House", totalAmount: 6500, deliveryFee: 800, status: "preparing", paymentStatus: "paid", zone: "Victoria Island", riderId: null, riderName: null, createdAt: "2026-06-02T12:15:00.000Z", items: [{ productId: 3, productName: "Pepperoni Pizza Large", qty: 1, price: 6500 }] },
+  { id: 3, orderNumber: "ORD-1003", customerName: "Ivy Moore", customerPhone: "+2348030003003", restaurantId: 6, restaurantName: "Demo Kitchen", totalAmount: 6700, deliveryFee: 400, status: "pending", paymentStatus: "unpaid", zone: "Ibadan North", riderId: null, riderName: null, createdAt: "2026-06-02T14:00:00.000Z", items: [{ productId: 5, productName: "Pounded Yam & Egusi Soup", qty: 1, price: 3200 }, { productId: 6, productName: "Banga Rice & Catfish", qty: 1, price: 3500 }] },
+  { id: 4, orderNumber: "ORD-1004", customerName: "Jack Taylor", customerPhone: "+2348030004004", restaurantId: 5, restaurantName: "Shawarma Spot NG", totalAmount: 2800, deliveryFee: 550, status: "assigned", paymentStatus: "paid", zone: "Port Harcourt City", riderId: 2, riderName: "Bob Courier", createdAt: "2026-06-02T09:45:00.000Z", items: [{ productId: 4, productName: "Chicken Shawarma Wrap", qty: 1, price: 2800 }] },
+  { id: 5, orderNumber: "ORD-1005", customerName: "Karen Anderson", customerPhone: "+2348030005005", restaurantId: 3, restaurantName: "Demo Place Eatery", totalAmount: 10000, deliveryFee: 400, status: "delivered", paymentStatus: "paid", zone: "Ibadan North", riderId: 3, riderName: "Alice Driver", createdAt: "2026-06-01T18:00:00.000Z", items: [{ productId: 7, productName: "Grilled Chicken Half", qty: 1, price: 5500 }, { productId: 9, productName: "Pepper Soup (Catfish)", qty: 1, price: 4500 }] },
+  { id: 6, orderNumber: "ORD-1006", customerName: "Laura Thomas", customerPhone: "+2348030006006", restaurantId: 4, restaurantName: "Demo Sweets", totalAmount: 3800, deliveryFee: 600, status: "cancelled", paymentStatus: "refunded", zone: "Garki", riderId: null, riderName: null, createdAt: "2026-05-31T16:20:00.000Z", items: [{ productId: 8, productName: "Chicken Burger Meal", qty: 1, price: 3800 }] },
 ];
 const demoNotifications = [
   { id: 1, title: "New Order #ORD-1004", message: "A new order has been placed", type: "order", audience: "all", status: "unread", createdAt: "2026-06-02T09:45:00.000Z" },
@@ -79,7 +79,7 @@ const demoBanks = [
   { id: 3, name: "First Bank", code: "011", status: "active" },
 ];
 const demoCompanies = [
-  { id: 1, name: "Cravings NG", email: "info@cravingsng.com", phone: "+2349000000000", address: "Lagos, Nigeria", status: "active" },
+  { id: 1, name: "Cravings NG", email: "info@example.com", phone: "+2349000000000", address: "Lagos, Nigeria", status: "active" },
 ];
 const demoTransactions = [
   { id: 1, reference: "TXN-001", amount: 7500, status: "completed", createdAt: "2026-06-01T10:35:00.000Z" },
@@ -87,24 +87,24 @@ const demoTransactions = [
   { id: 3, reference: "TXN-003", amount: 50000, status: "pending", createdAt: "2026-06-02T09:00:00.000Z" },
 ];
 const demoMarketers = [
-  { id: 1, name: "Chioma Eze", email: "chioma@example.com", phone: "+2348100001001", status: "active", commission: 5000, referrals: 12 },
-  { id: 2, name: "Segun Bello", email: "segun@example.com", phone: "+2348100002002", status: "active", commission: 3200, referrals: 8 },
+  { id: 1, name: "Maria Jackson", email: "chioma@example.com", phone: "+2348100001001", status: "active", commission: 5000, referrals: 12 },
+  { id: 2, name: "Nathan White", email: "segun@example.com", phone: "+2348100002002", status: "active", commission: 3200, referrals: 8 },
 ];
 const demoWaitingList = [
-  { id: 1, name: "Grace Okoro", email: "grace@example.com", phone: "+2348110001001", status: "pending", createdAt: "2026-06-01T10:00:00.000Z" },
+  { id: 1, name: "Olivia Harris", email: "grace@example.com", phone: "+2348110001001", status: "pending", createdAt: "2026-06-01T10:00:00.000Z" },
 ];
 const demoGeneralData = [
   { id: 1, key: "app_version", value: "1.2.0", type: "string" },
   { id: 2, key: "maintenance_mode", value: "false", type: "boolean" },
 ];
 const demoLogistics = [
-  { id: 1, name: "Fast Ship Logistics", email: "info@fastship.com", phone: "+2348120001001", status: "active", zones: "Lagos, Ibadan" },
+  { id: 1, name: "Fast Ship Logistics", email: "info@example.com", phone: "+2348120001001", status: "active", zones: "Lagos, Ibadan" },
 ];
 const demoLogisticsApplications = [
-  { id: 1, companyName: "Quick Delivery Co", email: "apply@quickdelivery.com", status: "pending", createdAt: "2026-06-01T10:00:00.000Z" },
+  { id: 1, companyName: "Quick Delivery Co", email: "apply@example.com", status: "pending", createdAt: "2026-06-01T10:00:00.000Z" },
 ];
 const demoVendorApplications = [
-  { id: 1, companyName: "Farm Fresh Produce", email: "vendor@farmfresh.com", status: "pending", createdAt: "2026-06-01T10:00:00.000Z" },
+  { id: 1, companyName: "Farm Fresh Produce", email: "vendor@example.com", status: "pending", createdAt: "2026-06-01T10:00:00.000Z" },
 ];
 const demoFoodCategories = [
   { id: 1, name: "Nigerian", status: "active", priority: 1 },
@@ -179,7 +179,7 @@ FoodDeliveryAdminRouter.get("/", (_req, res) => {
 
 // ==================== AUTH ====================
 FoodDeliveryAdminRouter.post("/admin/v1/login", Ctrl.Login);
-FoodDeliveryAdminRouter.post("/admin/v1/register", wrap(okData({ token: "demo-token", user: { _id: "1", id: 1, fullname: "New Admin", name: "New Admin", email: "admin@demo.com" } })));
+FoodDeliveryAdminRouter.post("/admin/v1/register", wrap(okData({ token: "demo-token", user: { _id: "1", id: 1, fullname: "Demo Admin", name: "Demo Admin", email: "admin@example.com" } })));
 FoodDeliveryAdminRouter.post("/admin/v1/forgot-password", wrap(okData({ emailSent: true })));
 FoodDeliveryAdminRouter.patch("/admin/v1/reset-password", wrap(ok));
 FoodDeliveryAdminRouter.get("/admin/v1/send-verification", wrap(okData({ emailSent: true })));
@@ -188,7 +188,7 @@ FoodDeliveryAdminRouter.get("/admin/v1/logout", Ctrl.Logout);
 FoodDeliveryAdminRouter.get("/admin/v1/me", Ctrl.GetMe);
 FoodDeliveryAdminRouter.patch("/admin/v1/update-self", Ctrl.UpdateAdminProfile);
 FoodDeliveryAdminRouter.patch("/admin/v1/update-password", Ctrl.UpdateAdminPassword);
-FoodDeliveryAdminRouter.patch("/admin/v1/update-email", wrap(okData({ email: "admin@updated.com" })));
+FoodDeliveryAdminRouter.patch("/admin/v1/update-email", wrap(okData({ email: "admin@example.com" })));
 FoodDeliveryAdminRouter.patch("/admin/v1/profile-image", wrap(okData({ image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200" })));
 
 // ==================== DASHBOARD ====================
@@ -257,19 +257,19 @@ for (const [resource, handler] of Object.entries(getSingleRoutes)) {
 FoodDeliveryAdminRouter.post("/admin/v1/restaurant", Ctrl.SaveRestaurant);
 FoodDeliveryAdminRouter.post("/admin/v1/coupon", Ctrl.SaveCoupon);
 FoodDeliveryAdminRouter.post("/admin/v1/tickets", wrap(okData({ id: 99, subject: "New Ticket", status: "open" })));
-FoodDeliveryAdminRouter.post("/admin/v1/company", wrap(okData({ id: 99, name: "New Company", status: "active" })));
+FoodDeliveryAdminRouter.post("/admin/v1/company", wrap(okData({ id: 99, name: "Demo Company", status: "active" })));
 FoodDeliveryAdminRouter.post("/admin/v1/products", Ctrl.SaveProduct);
 FoodDeliveryAdminRouter.post("/admin/v1/food/category", Ctrl.SaveFoodType);
-FoodDeliveryAdminRouter.post("/admin/v1/meal-measurement/category", wrap(okData({ id: 99, name: "New Measurement", unit: "portion", status: "active" })));
-FoodDeliveryAdminRouter.post("/admin/v1/restaurant/category", wrap(okData({ id: 99, name: "New Category", status: "active" })));
-FoodDeliveryAdminRouter.post("/admin/v1/logistics", wrap(okData({ id: 99, name: "New Logistics", status: "active" })));
-FoodDeliveryAdminRouter.post("/admin/v1/logistics-admin", wrap(okData({ id: 99, name: "New Logistics Admin", role: "LogisticsAdmin" })));
-FoodDeliveryAdminRouter.post("/admin/v1/marketer", wrap(okData({ id: 99, name: "New Marketer", status: "active" })));
+FoodDeliveryAdminRouter.post("/admin/v1/meal-measurement/category", wrap(okData({ id: 99, name: "Demo Measurement", unit: "portion", status: "active" })));
+FoodDeliveryAdminRouter.post("/admin/v1/restaurant/category", wrap(okData({ id: 99, name: "Demo Category", status: "active" })));
+FoodDeliveryAdminRouter.post("/admin/v1/logistics", wrap(okData({ id: 99, name: "Demo Logistics", status: "active" })));
+FoodDeliveryAdminRouter.post("/admin/v1/logistics-admin", wrap(okData({ id: 99, name: "Demo Logistics Admin", role: "LogisticsAdmin" })));
+FoodDeliveryAdminRouter.post("/admin/v1/marketer", wrap(okData({ id: 99, name: "Demo Marketer", status: "active" })));
 FoodDeliveryAdminRouter.post("/admin/v1/general-data", wrap(okData({ id: 99, key: "new_key", value: "new_value" })));
 FoodDeliveryAdminRouter.post("/admin/v1/notify", Ctrl.SaveNotification);
 
 // ====== Missing frontend routes ======
-FoodDeliveryAdminRouter.post("/admin/v1/promotions", wrap(okData({ id: 99, name: "New Promotion", status: "active" })));
+FoodDeliveryAdminRouter.post("/admin/v1/promotions", wrap(okData({ id: 99, name: "Demo Promotion", status: "active" })));
 FoodDeliveryAdminRouter.patch("/admin/v1/promotions/", wrap(okData({ isDeleted: true })));
 FoodDeliveryAdminRouter.delete("/admin/v1/coupon/:id", wrap(ok));
 FoodDeliveryAdminRouter.delete("/admin/v1/marketer/:id", (_req, res) => res.status(204).send());

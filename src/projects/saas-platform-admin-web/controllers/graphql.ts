@@ -190,7 +190,7 @@ const resolveField = (field: string, variables: Record<string, unknown>): unknow
   if (field === "getCustomerSurvey") {
     return { customerSurveyId: "survey-1", customerId: "customer-1",
       storeInformation: JSON.stringify({ sizeInM2: "24", yearStoreBeginOps: "2018" }),
-      ownerInformation: JSON.stringify({ fullName: "Titi Ade", gender: "Female", maritalStatus: "Married" }),
+      ownerInformation: JSON.stringify({ fullName: "Tina Davis", gender: "Female", maritalStatus: "Married" }),
       growthInformation: JSON.stringify({ yourBank: "Demo Bank", avgRevenue: "500000", topFiveMostPopularSKU: ["Noodles", "Oil", "Rice"] }) };
   }
   if (field === "getCustomerProductsWithRequestedProducts") return { customerProducts: products, requestedProducts: [] };

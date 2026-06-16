@@ -5,7 +5,7 @@ const USERS = [
     profileId: "CS0000000000001",
     firstName: "Demo",
     lastName: "User",
-    email: "demo@demo.com",
+    email: "demo@example.com",
     phoneNumber: "08012345678",
     password: "password",
     isVerified: 1,
@@ -17,7 +17,7 @@ const USERS = [
     profileId: "CS0000000000002",
     firstName: "Jane",
     lastName: "Smith",
-    email: "jane@castlestash.com",
+    email: "jane@example.com",
     phoneNumber: "08098765432",
     password: "Password2",
     isVerified: 1,
@@ -29,7 +29,7 @@ const USERS = [
     profileId: "CS0000000000003",
     firstName: "Unverified",
     lastName: "User",
-    email: "unverified@castlestash.com",
+    email: "unverified@example.com",
     phoneNumber: "08055555555",
     password: "password",
     isVerified: 0,
@@ -49,7 +49,7 @@ const TRANSACTIONS: {
   }[];
 }[] = [
   {
-    email: "demo@demo.com",
+    email: "demo@example.com",
     items: [
       { type: "credit", amount: 1000000, description: "Wallet funded via bank transfer", days: 60, status: "successful" },
       { type: "credit", amount: 500000, description: "Wallet funded via card payment", days: 45, status: "successful" },
@@ -66,7 +66,7 @@ const TRANSACTIONS: {
     ],
   },
   {
-    email: "jane@castlestash.com",
+    email: "jane@example.com",
     items: [
       { type: "credit", amount: 2000000, description: "Wallet funded via bank transfer", days: 90, status: "successful" },
       { type: "credit", amount: 750000, description: "Wallet funded via card payment", days: 60, status: "successful" },
@@ -151,7 +151,7 @@ const INVESTMENTS: {
   items: { propertyId: string; amount: number; status: string; days: number }[];
 }[] = [
   {
-    email: "demo@demo.com",
+    email: "demo@example.com",
     items: [
       { propertyId: "PROP-001", amount: 300000, status: "active", days: 40 },
       { propertyId: "PROP-002", amount: 500000, status: "active", days: 30 },
@@ -159,7 +159,7 @@ const INVESTMENTS: {
     ],
   },
   {
-    email: "jane@castlestash.com",
+    email: "jane@example.com",
     items: [
       { propertyId: "PROP-001", amount: 500000, status: "active", days: 55 },
       { propertyId: "PROP-002", amount: 1000000, status: "active", days: 40 },
@@ -315,7 +315,7 @@ export const setupMonoWebDatabase = () => {
 
   const demoUser = sqlite
     .prepare("SELECT id FROM mono_users WHERE email = ?")
-    .get("demo@demo.com") as { id: number };
+    .get("demo@example.com") as { id: number };
 
   insertBank.run({
     userId: demoUser.id,
@@ -327,7 +327,7 @@ export const setupMonoWebDatabase = () => {
 
   const janeUser = sqlite
     .prepare("SELECT id FROM mono_users WHERE email = ?")
-    .get("jane@castlestash.com") as { id: number };
+    .get("jane@example.com") as { id: number };
 
   insertBank.run({
     userId: janeUser.id,

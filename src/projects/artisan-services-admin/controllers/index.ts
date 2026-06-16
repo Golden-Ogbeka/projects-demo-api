@@ -8,19 +8,19 @@ import {
 
 const names = {
   first: [
-    "Chidi", "Ngozi", "Oluwaseun", "Adebayo", "Chinwe", "Emeka", "Funmilayo",
-    "Gboyega", "Hauwa", "Ifeanyi", "Jumoke", "Kelechi", "Lola", "Musa",
-    "Nkechi", "Obinna", "Priscilla", "Quadri", "Rukayat", "Sadiq",
-    "Temitope", "Uche", "Victor", "Wale", "Yetunde", "Zainab",
-    "Chukwudi", "Bolanle", "Damilare", "Ezinne", "Faruk", "Grace",
-    "Habib", "Ijeoma", "James", "Kafayat", "Lukman", "Mariam",
+    "John", "Jane", "Bob", "Alice", "Charlie", "Diana", "Frank",
+    "Grace", "Henry", "Ivy", "Jack", "Karen", "Leo", "Maria",
+    "Nathan", "Olivia", "Paul", "Quinn", "Rachel", "Sam",
+    "Tina", "Uma", "Victor", "Wendy", "Xander", "Yara",
+    "Zane", "Ava", "Ben", "Chloe", "David", "Ella",
+    "Finn", "Gemma", "Hank", "Isla", "Jake", "Luna",
   ],
   last: [
-    "Okonkwo", "Adebayo", "Okafor", "Bello", "Chukwu", "Diya", "Ekwueme",
-    "Fashola", "Garba", "Hassan", "Ibrahim", "Jega", "Kalu", "Lawal",
-    "Mbah", "Nwachukwu", "Obasanjo", "Okeke", "Paul", "Quadri",
-    "Raji", "Sowemimo", "Tijani", "Umar", "Vaughan", "Yakubu",
-    "Abubakar", "Bamidele", "Eze", "Nwosu", "Ogunlade", "Ugwu",
+    "Doe", "Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia",
+    "Miller", "Davis", "Rodriguez", "Martinez", "Wilson", "Anderson", "Taylor",
+    "Thomas", "Moore", "Jackson", "Martin", "Lee", "Perez",
+    "Thompson", "White", "Harris", "Sanchez", "Clark", "Ramirez",
+    "Lewis", "Robinson", "Walker", "Hall", "Allen", "Young",
   ],
   artisanBusiness: [
     "PrimeFix Services", "Ace Plumbing", "Bright Electricals", "DeRoi Carpentry",
@@ -108,7 +108,7 @@ const generateArtisans = (count: number) => {
       resetCount: 0,
       verificationCount: 1,
       sendCodeTo: null,
-      email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}${i}@koneqtor.com`,
+      email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}${i}@example.com`,
       fullname: `${firstName} ${lastName}`,
       phone: `+23480${String(10000000 + i).slice(0, 8)}`,
       ntfToken: `demo-ntf-${i}`,
@@ -154,7 +154,7 @@ const generateCustomers = (count: number) => {
       resetCount: 0,
       verificationCount: 1,
       sendCodeTo: "email",
-      email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}${i}@email.com`,
+      email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}${i}@example.com`,
       fullname: `${firstName} ${lastName}`,
       firstname: firstName,
       lastname: lastName,
@@ -221,13 +221,13 @@ const generateTickets = (count: number) => {
       files: [],
       uid: `uid_${i}`,
       fullname: `${fn} ${ln}`,
-      email: `${fn.toLowerCase()}.${ln.toLowerCase()}@email.com`,
+      email: `${fn.toLowerCase()}.${ln.toLowerCase()}@example.com`,
       phone: `+23480${String(30000000 + i).slice(0, 8)}`,
       subject: pick(subjects),
       comment: `Customer reported: ${pick(subjects).toLowerCase()}.`,
       role: pick(["user", "artisan"]),
       userId: `user_${Math.floor(1 + Math.random() * 30)}`,
-      attendingStaff: i % 3 === 0 ? { _id: "admin_1", fullname: "Demo Admin", phone: "+2348011111111", email: "demo@demo.com" } : null,
+      attendingStaff: i % 3 === 0 ? { _id: "admin_1", fullname: "Demo Admin", phone: "+2348011111111", email: "demo@example.com" } : null,
       createdAt: daysAgo(Math.floor(Math.random() * 30)),
     });
   }
@@ -375,7 +375,7 @@ const generateWaitingList = (count: number) => {
     const lastName = pick(names.last);
     list.push({
       _id: `wait_${i}`,
-      email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@gmail.com`,
+      email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@example.com`,
       createdAt: daysAgo(Math.floor(Math.random() * 90)),
     });
   }
@@ -391,7 +391,7 @@ const generateFeedbacks = (count: number) => {
       _id: `fb_${i}`,
       firstname: firstName,
       lastname: lastName,
-      email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@email.com`,
+      email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@example.com`,
       comment: `Great service! I am very satisfied with the ${pick(catNames).toLowerCase()} work done.`,
       createdAt: daysAgo(Math.floor(Math.random() * 90)),
     });
@@ -805,7 +805,7 @@ export const ArtisanServicesAdminController = () => {
 
       const newCat: any = {
         _id: `cat_${nextCatId++}`,
-        name: name || "New Category",
+        name: name || "Demo Category",
         description: description || "",
         image: "",
         services: [],
@@ -856,7 +856,7 @@ export const ArtisanServicesAdminController = () => {
           resetCount: 0,
           verificationCount: 0,
           sendCodeTo: null,
-          email: email || `newartisan${newId}@koneqtor.com`,
+          email: email || `newartisan${newId}@example.com`,
           fullname: fullname || `${pick(names.first)} ${pick(names.last)}`,
           phone: phone || `+23480${String(40000000 + newId).slice(0, 8)}`,
           ntfToken: "",
@@ -898,7 +898,7 @@ export const ArtisanServicesAdminController = () => {
         resetCount: 0,
         verificationCount: 0,
         sendCodeTo: "email",
-        email: email || `newuser${newId}@email.com`,
+        email: email || `newuser${newId}@example.com`,
         fullname: fullname || `${pick(names.first)} ${pick(names.last)}`,
         firstname: fullname?.split(" ")[0] || pick(names.first),
         lastname: fullname?.split(" ")[1] || pick(names.last),
@@ -1160,7 +1160,7 @@ export const ArtisanServicesAdminController = () => {
         files: [],
         uid: `uid_new`,
         fullname: "Demo Admin",
-        email: "demo@demo.com",
+        email: "demo@example.com",
         phone: "+2348011111111",
         subject: subject || "New Ticket",
         comment: comment || "",
@@ -1184,7 +1184,7 @@ export const ArtisanServicesAdminController = () => {
       if (!ticket) return sendErrorFeedback(res, 404, "Ticket not found");
       if (status) ticket.status = status;
       if (recipient && recipientId) {
-        ticket.attendingStaff = { _id: recipientId, fullname: "Demo Admin", phone: "+2348011111111", email: "demo@demo.com" };
+        ticket.attendingStaff = { _id: recipientId, fullname: "Demo Admin", phone: "+2348011111111", email: "demo@example.com" };
       }
       logEvent("update", "ticket", 1, `Updated ticket: ${ticketId}`);
       return sendSuccessFeedback(res, "Ticket updated successfully", ticket);
@@ -1254,7 +1254,7 @@ export const ArtisanServicesAdminController = () => {
         booking: booking || "",
         disputeId,
         createdAt: new Date().toISOString(),
-        user: { _id: "admin_1", email: "demo@demo.com", fullname: "Demo Admin", phone: "+2348011111111" },
+        user: { _id: "admin_1", email: "demo@example.com", fullname: "Demo Admin", phone: "+2348011111111" },
         firstname: "Demo",
         role: "admin",
         comment: comment || "Response message",

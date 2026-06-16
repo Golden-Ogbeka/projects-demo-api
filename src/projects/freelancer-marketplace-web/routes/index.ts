@@ -10,7 +10,7 @@ FreelancerMarketplaceRouter.get("/", (_req: Request, res: Response) => {
     message: "Freelancer Marketplace dummy backend",
     data: {
       graphql: "/freelancer-marketplace-web/graphql",
-      demoLogin: { email: "demo@demo.com", password: "password" },
+      demoLogin: { email: "demo@example.com", password: "password" },
     },
   });
 });
@@ -41,7 +41,7 @@ FreelancerMarketplaceRouter.get("/auth/callback", (_req: Request, res: Response)
       user: {
         _id: "user-1",
         name: "Demo Freelancer",
-        email: "demo@demo.com",
+        email: "demo@example.com",
       },
       token: "demo-social-token",
     },

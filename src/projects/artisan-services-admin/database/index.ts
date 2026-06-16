@@ -34,7 +34,7 @@ export const setupArtisanServicesAdminDatabase = () => {
        VALUES (@email, @password, @name, @role)`,
     )
     .run({
-      email: "demo@demo.com",
+      email: "demo@example.com",
       password: "password",
       name: "Demo Admin",
       role: "superadmin",
@@ -46,9 +46,9 @@ export const setupArtisanServicesAdminDatabase = () => {
        VALUES (@email, @password, @name, @role)`,
     )
     .run({
-      email: "admin2@artisanservices.com",
+      email: "admin2@example.com",
       password: "password",
-      name: "Chioma Okafor",
+      name: "Jane Doe",
       role: "admin",
     });
 
@@ -58,9 +58,9 @@ export const setupArtisanServicesAdminDatabase = () => {
        VALUES (@email, @password, @name, @role)`,
     )
     .run({
-      email: "admin3@artisanservices.com",
+      email: "admin3@example.com",
       password: "password",
-      name: "Femi Adewale",
+      name: "Bob Smith",
       role: "moderator",
     });
 };

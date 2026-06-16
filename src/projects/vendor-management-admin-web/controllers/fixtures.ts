@@ -67,7 +67,7 @@ export const demoUser = {
   lastName: "Admin",
   fullName: "Demo Admin",
   userName: "demo.admin",
-  email: "demo@demo.com",
+  email: "demo@example.com",
   phoneNo: "+2348012345678",
   status: "ACTIVE",
   isActive: true,
@@ -141,7 +141,7 @@ export const demoUsers = [
     ...demoUser,
     _id: "user-2",
     userId: "user-2",
-    fullName: "Ada Operations",
+    fullName: "Alice Admin",
     userName: "ada.ops",
     email: "ada.ops@example.com",
   },
@@ -149,7 +149,7 @@ export const demoUsers = [
     ...demoUser,
     _id: "user-3",
     userId: "user-3",
-    fullName: "Chidi Warehouse",
+    fullName: "Demo Staff",
     userName: "chidi.warehouse",
     email: "chidi.warehouse@example.com",
   },
@@ -340,12 +340,12 @@ export const demoLeaderBoard = [
   {
     userId: "user-2",
     totalAmount: 1420000,
-    user: { imageUrl: UNSPLASH.avatar, fullName: "Ada Operations" },
+    user: { imageUrl: UNSPLASH.avatar, fullName: "Alice Admin" },
   },
   {
     userId: "user-3",
     totalAmount: 980000,
-    user: { imageUrl: UNSPLASH.avatar, fullName: "Chidi Warehouse" },
+    user: { imageUrl: UNSPLASH.avatar, fullName: "Demo Staff" },
   },
 ];
 
@@ -568,7 +568,7 @@ export const demoCustomers = [
     businessName: "Demo Store A",
     customerIdentifier: "CUST-001",
     phoneNo: "+2348012345678",
-    email: "store.a@demo.com",
+    email: "store.a@example.com",
     status: "ACTIVE",
     Stores: [
       {
@@ -587,7 +587,7 @@ export const demoCustomers = [
     businessName: "Demo Store B",
     customerIdentifier: "CUST-002",
     phoneNo: "+2348087654321",
-    email: "store.b@demo.com",
+    email: "store.b@example.com",
     status: "ACTIVE",
     Stores: [
       {

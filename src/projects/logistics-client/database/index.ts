@@ -81,7 +81,7 @@ export const setupLogisticsClientDatabase = () => {
       )
       .run({
         name: "Demo Customer",
-        email: "demo@demo.com",
+        email: "demo@example.com",
         phone: "+2348012345678",
         password: "password",
       });

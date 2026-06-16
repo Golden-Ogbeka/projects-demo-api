@@ -118,7 +118,7 @@ export const setupArtisanServicesWebDatabase = () => {
     )
     .run({
       name: "Demo User",
-      email: "demo@demo.com",
+      email: "demo@example.com",
       phone: "08012345678",
       password: "password",
       isVerified: 1,
@@ -130,7 +130,7 @@ export const setupArtisanServicesWebDatabase = () => {
        VALUES (@name, @email, @phone, @password, @isVerified)`,
     )
     .run({
-      name: "Chioma Okonkwo",
+      name: "Jane Doe",
       email: "chioma@example.com",
       phone: "08098765432",
       password: "password",
@@ -139,7 +139,7 @@ export const setupArtisanServicesWebDatabase = () => {
 
   const demoUser = sqlite
     .prepare("SELECT id FROM artisan_services_web_users WHERE email = ?")
-    .get("demo@demo.com") as { id: number };
+    .get("demo@example.com") as { id: number };
 
   sqlite
     .prepare(

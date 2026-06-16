@@ -158,13 +158,13 @@ export const setupRealEstateAdminDatabase = () => {
   if (userCount > 0) return;
 
   const insertUser = sqlite.prepare(`INSERT INTO real_estate_admin_users (name,email,password,phone,role,status,createdAt) VALUES (?,?,?,?,?,?,?)`);
-  insertUser.run("Demo Admin", "demo@demo.com", "password", null, "admin", "active", new Date(Date.now() - 180 * 86400000).toISOString());
-  insertUser.run("Chioma Okeke", "chioma@landshop.ng", null, "+2348020001001", "agent", "active", "2025-11-15T10:00:00.000Z");
-  insertUser.run("Femi Adeyemi", "femi@landshop.ng", null, "+2348020002002", "investor", "active", "2026-01-20T08:30:00.000Z");
-  insertUser.run("Zainab Abdullah", "zainab@landshop.ng", null, "+2348020003003", "buyer", "active", "2026-02-10T14:00:00.000Z");
-  insertUser.run("Emeka Nwosu", "emeka@landshop.ng", null, "+2348020004004", "seller", "inactive", "2025-08-05T09:00:00.000Z");
-  insertUser.run("Kemi Balogun", "kemi@landshop.ng", null, "+2348020005005", "buyer", "active", "2026-03-12T11:15:00.000Z");
-  insertUser.run("Segun Ogunlade", "segun@landshop.ng", null, "+2348020006006", "agent", "active", "2025-09-28T16:00:00.000Z");
+  insertUser.run("Demo Admin", "demo@example.com", "password", null, "admin", "active", new Date(Date.now() - 180 * 86400000).toISOString());
+  insertUser.run("Tina Lewis", "chioma@example.com", null, "+2348020001001", "agent", "active", "2025-11-15T10:00:00.000Z");
+  insertUser.run("Bob Smith", "femi@example.com", null, "+2348020002002", "investor", "active", "2026-01-20T08:30:00.000Z");
+  insertUser.run("Uma Walker", "zainab@example.com", null, "+2348020003003", "buyer", "active", "2026-02-10T14:00:00.000Z");
+  insertUser.run("Charlie Brown", "emeka@example.com", null, "+2348020004004", "seller", "inactive", "2025-08-05T09:00:00.000Z");
+  insertUser.run("Victor Hall", "kemi@example.com", null, "+2348020005005", "buyer", "active", "2026-03-12T11:15:00.000Z");
+  insertUser.run("Wendy Young", "segun@example.com", null, "+2348020006006", "agent", "active", "2025-09-28T16:00:00.000Z");
 
   const insertProperty = sqlite.prepare(`INSERT INTO real_estate_admin_properties (title,type,price,location,bedrooms,bathrooms,area,status,image,description,features,createdAt) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`);
   insertProperty.run("Luxury Villa in Ikoyi", "villa", 250000000, "Ikoyi, Lagos", 5, 6, 850, "available", IMAGES.property, "Stunning 5-bedroom luxury villa in the heart of Ikoyi with modern finishes, swimming pool, and 24/7 security.", JSON.stringify(["Swimming Pool", "Smart Home", "CCTV", "Generator", "Staff Quarters"]), "2026-01-10T10:00:00.000Z");
@@ -185,29 +185,29 @@ export const setupRealEstateAdminDatabase = () => {
   insertDevelopment.run("Lekki County Homes", "Phase 4", "residential", 300, 210, "ongoing", 3500000000, "Lekki, Lagos", "2024-06-01T00:00:00.000Z", "2027-09-30T00:00:00.000Z", 70);
 
   const insertInvestment = sqlite.prepare(`INSERT INTO real_estate_admin_investments (propertyId,propertyName,investor,amount,roi,status,startDate,expectedMaturity,returnsPaid) VALUES (?,?,?,?,?,?,?,?,?)`);
-  insertInvestment.run(1, "Luxury Villa in Ikoyi", "Femi Adeyemi", 50000000, 12.5, "active", "2026-01-15T00:00:00.000Z", "2028-01-15T00:00:00.000Z", 5208333);
-  insertInvestment.run(2, "Commercial Plot in Lekki", "Chioma Okeke", 25000000, 15, "active", "2026-02-01T00:00:00.000Z", "2028-02-01T00:00:00.000Z", 1562500);
-  insertInvestment.run(7, "Penthouse in Banana Island", "Zainab Abdullah", 100000000, 10, "active", "2026-04-10T00:00:00.000Z", "2029-04-10T00:00:00.000Z", 1666667);
-  insertInvestment.run(4, "Affordable 2-Bedroom Flat", "Segun Ogunlade", 10000000, 18, "active", "2026-03-01T00:00:00.000Z", "2027-03-01T00:00:00.000Z", 450000);
-  insertInvestment.run(3, "Executive Duplex in Wuse 2", "Kemi Balogun", 35000000, 11, "matured", "2024-06-01T00:00:00.000Z", "2026-06-01T00:00:00.000Z", 7700000);
-  insertInvestment.run(8, "Industrial Warehouse in Agbara", "Emeka Nwosu", 60000000, 14, "active", "2026-05-01T00:00:00.000Z", "2029-05-01T00:00:00.000Z", 1166667);
+  insertInvestment.run(1, "Luxury Villa in Ikoyi", "Bob Smith", 50000000, 12.5, "active", "2026-01-15T00:00:00.000Z", "2028-01-15T00:00:00.000Z", 5208333);
+  insertInvestment.run(2, "Commercial Plot in Lekki", "Tina Lewis", 25000000, 15, "active", "2026-02-01T00:00:00.000Z", "2028-02-01T00:00:00.000Z", 1562500);
+  insertInvestment.run(7, "Penthouse in Banana Island", "Uma Walker", 100000000, 10, "active", "2026-04-10T00:00:00.000Z", "2029-04-10T00:00:00.000Z", 1666667);
+  insertInvestment.run(4, "Affordable 2-Bedroom Flat", "Wendy Young", 10000000, 18, "active", "2026-03-01T00:00:00.000Z", "2027-03-01T00:00:00.000Z", 450000);
+  insertInvestment.run(3, "Executive Duplex in Wuse 2", "Victor Hall", 35000000, 11, "matured", "2024-06-01T00:00:00.000Z", "2026-06-01T00:00:00.000Z", 7700000);
+  insertInvestment.run(8, "Industrial Warehouse in Agbara", "Charlie Brown", 60000000, 14, "active", "2026-05-01T00:00:00.000Z", "2029-05-01T00:00:00.000Z", 1166667);
 
   const insertTransaction = sqlite.prepare(`INSERT INTO real_estate_admin_transactions (propertyId,propertyName,buyer,investor,amount,type,status,reference,date,paymentMethod) VALUES (?,?,?,?,?,?,?,?,?,?)`);
-  insertTransaction.run(1, "Luxury Villa in Ikoyi", "Zainab Abdullah", null, 250000000, "sale", "completed", "TXN-LS-001", "2026-04-15T14:30:00.000Z", "bank_transfer");
-  insertTransaction.run(4, "Affordable 2-Bedroom Flat", "Segun Ogunlade", null, 35000000, "sale", "pending", "TXN-LS-002", "2026-05-20T10:00:00.000Z", "installment");
-  insertTransaction.run(1, "Luxury Villa in Ikoyi", null, "Femi Adeyemi", 50000000, "investment_returns", "completed", "TXN-LS-003", "2026-04-30T08:00:00.000Z", "bank_transfer");
+  insertTransaction.run(1, "Luxury Villa in Ikoyi", "Uma Walker", null, 250000000, "sale", "completed", "TXN-LS-001", "2026-04-15T14:30:00.000Z", "bank_transfer");
+  insertTransaction.run(4, "Affordable 2-Bedroom Flat", "Wendy Young", null, 35000000, "sale", "pending", "TXN-LS-002", "2026-05-20T10:00:00.000Z", "installment");
+  insertTransaction.run(1, "Luxury Villa in Ikoyi", null, "Bob Smith", 50000000, "investment_returns", "completed", "TXN-LS-003", "2026-04-30T08:00:00.000Z", "bank_transfer");
   insertTransaction.run(6, "3-Bedroom Terrace in GRA", "Demo Admin", null, 65000000, "sale", "completed", "TXN-LS-004", "2026-03-25T12:00:00.000Z", "bank_transfer");
-  insertTransaction.run(2, "Commercial Plot in Lekki", "Chioma Okeke", null, 85000000, "sale", "pending", "TXN-LS-005", "2026-06-01T09:00:00.000Z", "mortgage");
-  insertTransaction.run(5, "Beachfront Land in Elegushi", "Emeka Nwosu", null, 120000000, "sale", "completed", "TXN-LS-006", "2026-03-10T16:00:00.000Z", "bank_transfer");
-  insertTransaction.run(6, "3-Bedroom Terrace in GRA", null, "Femi Adeyemi", 15000000, "investment_returns", "pending", "TXN-LS-007", "2026-06-01T11:00:00.000Z", "bank_transfer");
-  insertTransaction.run(3, "Executive Duplex in Wuse 2", "Kemi Balogun", null, 180000000, "sale", "completed", "TXN-LS-008", "2026-02-28T15:00:00.000Z", "bank_transfer");
+  insertTransaction.run(2, "Commercial Plot in Lekki", "Tina Lewis", null, 85000000, "sale", "pending", "TXN-LS-005", "2026-06-01T09:00:00.000Z", "mortgage");
+  insertTransaction.run(5, "Beachfront Land in Elegushi", "Charlie Brown", null, 120000000, "sale", "completed", "TXN-LS-006", "2026-03-10T16:00:00.000Z", "bank_transfer");
+  insertTransaction.run(6, "3-Bedroom Terrace in GRA", null, "Bob Smith", 15000000, "investment_returns", "pending", "TXN-LS-007", "2026-06-01T11:00:00.000Z", "bank_transfer");
+  insertTransaction.run(3, "Executive Duplex in Wuse 2", "Victor Hall", null, 180000000, "sale", "completed", "TXN-LS-008", "2026-02-28T15:00:00.000Z", "bank_transfer");
 
   const insertBlog = sqlite.prepare(`INSERT INTO real_estate_admin_blog_posts (title,slug,excerpt,content,author,category,image,status,publishedAt,createdAt) VALUES (?,?,?,?,?,?,?,?,?,?)`);
   insertBlog.run("Top 5 Real Estate Investment Trends in Lagos 2026", "top-5-real-estate-trends-lagos-2026", "Discover the hottest real estate trends shaping Lagos property market this year.", "Lagos real estate continues to evolve rapidly. From smart homes to sustainable developments, here are the top trends driving the market in 2026...", "Demo Admin", "Market Insights", IMAGES.blog, "published", "2026-05-15T10:00:00.000Z", "2026-05-10T10:00:00.000Z");
-  insertBlog.run("A Beginner's Guide to Real Estate Investment in Nigeria", "beginners-guide-real-estate-investment-nigeria", "Everything you need to know before making your first property investment.", "Investing in real estate in Nigeria can be lucrative if you understand the fundamentals. This guide walks you through the process...", "Chioma Okeke", "Investment Guide", IMAGES.blog, "published", "2026-04-20T10:00:00.000Z", "2026-04-15T10:00:00.000Z");
+  insertBlog.run("A Beginner's Guide to Real Estate Investment in Nigeria", "beginners-guide-real-estate-investment-nigeria", "Everything you need to know before making your first property investment.", "Investing in real estate in Nigeria can be lucrative if you understand the fundamentals. This guide walks you through the process...", "Tina Lewis", "Investment Guide", IMAGES.blog, "published", "2026-04-20T10:00:00.000Z", "2026-04-15T10:00:00.000Z");
   insertBlog.run("Abuja vs Lagos: Where Should You Invest in 2026?", "abuja-vs-lagos-invest-2026", "A comparative analysis of the two biggest real estate markets in Nigeria.", "Both Abuja and Lagos offer unique opportunities for real estate investors. We break down the pros and cons of each market...", "Demo Admin", "Market Insights", IMAGES.blog, "published", "2026-03-10T10:00:00.000Z", "2026-03-05T10:00:00.000Z");
   insertBlog.run("Understanding Land Titles and C of O in Nigeria", "understanding-land-titles-c-of-o-nigeria", "A comprehensive overview of property documentation and why it matters.", "One of the most critical aspects of real estate transactions in Nigeria is understanding land titles and Certificates of Occupancy...", "Demo Admin", "Legal Guide", IMAGES.blog, "published", "2026-02-25T10:00:00.000Z", "2026-02-20T10:00:00.000Z");
-  insertBlog.run("The Rise of Co-living Spaces in Nigerian Cities", "rise-of-co-living-spaces-nigeria", "How co-living is changing the rental landscape for young professionals.", "Co-living spaces are gaining popularity among Nigeria's urban professionals. We explore why this trend is catching on...", "Femi Adeyemi", "Trends", IMAGES.blog, "draft", null, "2026-05-28T10:00:00.000Z");
+  insertBlog.run("The Rise of Co-living Spaces in Nigerian Cities", "rise-of-co-living-spaces-nigeria", "How co-living is changing the rental landscape for young professionals.", "Co-living spaces are gaining popularity among Nigeria's urban professionals. We explore why this trend is catching on...", "Bob Smith", "Trends", IMAGES.blog, "draft", null, "2026-05-28T10:00:00.000Z");
 
   const insertGrow = sqlite.prepare(`INSERT INTO real_estate_admin_grows (name,type,targetAmount,raisedAmount,roi,durationMonths,status,investors,startDate,endDate) VALUES (?,?,?,?,?,?,?,?,?,?)`);
   insertGrow.run("Land Banking Scheme - Lekki", "land_banking", 200000000, 145000000, 20, 24, "active", 45, "2025-12-01T00:00:00.000Z", "2027-12-01T00:00:00.000Z");
@@ -217,32 +217,32 @@ export const setupRealEstateAdminDatabase = () => {
   insertGrow.run("Rental Income Pool - Abuja", "rental_pool", 150000000, 95000000, 12, 18, "active", 55, "2026-04-01T00:00:00.000Z", "2027-10-01T00:00:00.000Z");
 
   const insertContact = sqlite.prepare(`INSERT INTO real_estate_admin_contacts (name,email,phone,message,property,status,createdAt) VALUES (?,?,?,?,?,?,?)`);
-  insertContact.run("Bola Tinubu", "bola@example.com", "+2348030001001", "I am interested in the Luxury Villa in Ikoyi. Please send more details.", "Luxury Villa in Ikoyi", "unread", "2026-05-30T14:30:00.000Z");
-  insertContact.run("Ifeanyi Obi", "ifeanyi@example.com", "+2348030002002", "Do you have any 3-bedroom apartments available in Abuja under 40 million?", null, "read", "2026-05-28T11:00:00.000Z");
-  insertContact.run("Grace Akpan", "grace@example.com", "+2348030003003", "I would like to schedule a viewing for the Commercial Plot in Lekki.", "Commercial Plot in Lekki", "read", "2026-05-25T09:00:00.000Z");
-  insertContact.run("Tunde Bakare", "tunde@example.com", "+2348030004004", "Please send me the brochure for Ibeju-Lekki Smart City.", "Ibeju-Lekki Smart City", "unread", "2026-06-01T08:15:00.000Z");
-  insertContact.run("Ngozi Eze", "ngozi@example.com", "+2348030005005", "I am looking for commercial spaces for lease in Victoria Island.", null, "unread", "2026-06-02T16:45:00.000Z");
+  insertContact.run("John Doe", "bola@example.com", "+2348030001001", "I am interested in the Luxury Villa in Ikoyi. Please send more details.", "Luxury Villa in Ikoyi", "unread", "2026-05-30T14:30:00.000Z");
+  insertContact.run("Charlie Brown", "ifeanyi@example.com", "+2348030002002", "Do you have any 3-bedroom apartments available in Abuja under 40 million?", null, "read", "2026-05-28T11:00:00.000Z");
+  insertContact.run("Grace Williams", "grace@example.com", "+2348030003003", "I would like to schedule a viewing for the Commercial Plot in Lekki.", "Commercial Plot in Lekki", "read", "2026-05-25T09:00:00.000Z");
+  insertContact.run("Frank Miller", "tunde@example.com", "+2348030004004", "Please send me the brochure for Ibeju-Lekki Smart City.", "Ibeju-Lekki Smart City", "unread", "2026-06-01T08:15:00.000Z");
+  insertContact.run("Karen Anderson", "ngozi@example.com", "+2348030005005", "I am looking for commercial spaces for lease in Victoria Island.", null, "unread", "2026-06-02T16:45:00.000Z");
 
   const insertInvoice = sqlite.prepare(`INSERT INTO real_estate_admin_invoices (transactionId,transactionRef,client,amount,status,dueDate,issuedAt,paidAt) VALUES (?,?,?,?,?,?,?,?)`);
-  insertInvoice.run(1, "TXN-LS-001", "Zainab Abdullah", 250000000, "paid", "2026-04-30T00:00:00.000Z", "2026-04-10T10:00:00.000Z", "2026-04-15T14:30:00.000Z");
-  insertInvoice.run(2, "TXN-LS-002", "Segun Ogunlade", 35000000, "pending", "2026-07-20T00:00:00.000Z", "2026-05-20T10:00:00.000Z", null);
+  insertInvoice.run(1, "TXN-LS-001", "Uma Walker", 250000000, "paid", "2026-04-30T00:00:00.000Z", "2026-04-10T10:00:00.000Z", "2026-04-15T14:30:00.000Z");
+  insertInvoice.run(2, "TXN-LS-002", "Wendy Young", 35000000, "pending", "2026-07-20T00:00:00.000Z", "2026-05-20T10:00:00.000Z", null);
   insertInvoice.run(4, "TXN-LS-004", "Demo Admin", 65000000, "paid", "2026-04-01T00:00:00.000Z", "2026-03-20T12:00:00.000Z", "2026-03-25T12:00:00.000Z");
-  insertInvoice.run(6, "TXN-LS-006", "Emeka Nwosu", 120000000, "paid", "2026-03-25T00:00:00.000Z", "2026-03-05T16:00:00.000Z", "2026-03-10T16:00:00.000Z");
-  insertInvoice.run(5, "TXN-LS-005", "Chioma Okeke", 85000000, "pending", "2026-08-01T00:00:00.000Z", "2026-06-01T09:00:00.000Z", null);
-  insertInvoice.run(8, "TXN-LS-008", "Kemi Balogun", 180000000, "paid", "2026-03-15T00:00:00.000Z", "2026-02-20T15:00:00.000Z", "2026-02-28T15:00:00.000Z");
+  insertInvoice.run(6, "TXN-LS-006", "Charlie Brown", 120000000, "paid", "2026-03-25T00:00:00.000Z", "2026-03-05T16:00:00.000Z", "2026-03-10T16:00:00.000Z");
+  insertInvoice.run(5, "TXN-LS-005", "Tina Lewis", 85000000, "pending", "2026-08-01T00:00:00.000Z", "2026-06-01T09:00:00.000Z", null);
+  insertInvoice.run(8, "TXN-LS-008", "Victor Hall", 180000000, "paid", "2026-03-15T00:00:00.000Z", "2026-02-20T15:00:00.000Z", "2026-02-28T15:00:00.000Z");
 
   const insertReview = sqlite.prepare(`INSERT INTO real_estate_admin_reviews (propertyId,propertyName,reviewer,rating,comment,status,createdAt) VALUES (?,?,?,?,?,?,?)`);
-  insertReview.run(1, "Luxury Villa in Ikoyi", "Zainab Abdullah", 5, "Absolutely stunning property. The team made the purchase seamless.", "approved", "2026-05-01T12:00:00.000Z");
+  insertReview.run(1, "Luxury Villa in Ikoyi", "Uma Walker", 5, "Absolutely stunning property. The team made the purchase seamless.", "approved", "2026-05-01T12:00:00.000Z");
   insertReview.run(6, "3-Bedroom Terrace in GRA", "Demo Admin", 4, "Great location and well-built. The estate management is top-notch.", "approved", "2026-04-10T14:00:00.000Z");
-  insertReview.run(3, "Executive Duplex in Wuse 2", "Kemi Balogun", 5, "Couldn't be happier with my purchase. The duplex exceeded expectations.", "approved", "2026-03-15T10:00:00.000Z");
-  insertReview.run(5, "Beachfront Land in Elegushi", "Emeka Nwosu", 3, "Good land but took longer than expected to process the documents.", "approved", "2026-04-01T09:00:00.000Z");
-  insertReview.run(2, "Commercial Plot in Lekki", "Chioma Okeke", 5, "Excellent investment opportunity. Professional and transparent process.", "pending", "2026-06-02T11:00:00.000Z");
+  insertReview.run(3, "Executive Duplex in Wuse 2", "Victor Hall", 5, "Couldn't be happier with my purchase. The duplex exceeded expectations.", "approved", "2026-03-15T10:00:00.000Z");
+  insertReview.run(5, "Beachfront Land in Elegushi", "Charlie Brown", 3, "Good land but took longer than expected to process the documents.", "approved", "2026-04-01T09:00:00.000Z");
+  insertReview.run(2, "Commercial Plot in Lekki", "Tina Lewis", 5, "Excellent investment opportunity. Professional and transparent process.", "pending", "2026-06-02T11:00:00.000Z");
 
   const insertSettings = sqlite.prepare(`INSERT INTO real_estate_admin_settings (id, data) VALUES (1, ?)`);
   insertSettings.run(JSON.stringify({
     siteName: "Real Estate Admin",
     tagline: "Your Trusted Real Estate Partner",
-    email: "info@landshop.ng",
+    email: "info@example.com",
     phone: "+2349000000000",
     address: "22 Admiralty Way, Lekki Phase 1, Lagos",
     currency: "NGN",

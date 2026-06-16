@@ -157,7 +157,7 @@ GraphQL: http://localhost:5050/event-marketplace-web/graphql
 Demo login:
 
 ```text
-Email: demo@demo.com
+Email: demo@example.com
 Password: password
 ```
 
@@ -175,7 +175,7 @@ Social auth redirects: GET /freelancer-marketplace-web/google, /freelancer-marke
 Demo login:
 
 ```text
-Email: demo@demo.com
+Email: demo@example.com
 Password: password
 ```
 

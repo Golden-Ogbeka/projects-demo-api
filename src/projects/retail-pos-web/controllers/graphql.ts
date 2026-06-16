@@ -232,7 +232,7 @@ const resolveField = (field: string, _variables: Record<string, unknown>): unkno
   // ── Referrals ──
   if (field === "getReferralSumary") return demoReferralSummary;
   if (field === "getDownlinesListByPartnerId") return paginated(demoCustomers.map((c) => ({ ...c, fullName: c.customerName, cityTown: "Ibadan", lastLoginTimestamp: new Date() })));
-  if (field === "getReferralDetail") return { owner: { phoneNumber: "08012345678", gender: "Male", email: "demo@demo.com", lga: "Ibadan North", address: "12 Demo Road", createdAt: "2026-01-01T00:00:00.000Z", state: "Oyo", city: "Ibadan" }, terminals: demoTerminals };
+  if (field === "getReferralDetail") return { owner: { phoneNumber: "08012345678", gender: "Male", email: "demo@example.com", lga: "Ibadan North", address: "12 Demo Road", createdAt: "2026-01-01T00:00:00.000Z", state: "Oyo", city: "Ibadan" }, terminals: demoTerminals };
   if (field === "getReferralSales") return paginated(demoSales);
 
   // ── Reports ──
@@ -282,7 +282,7 @@ const resolveField = (field: string, _variables: Record<string, unknown>): unkno
   }
 
   // ── Mutations ──
-  if (field === "addBusiness") return { _id: "business-demo-1", businessName: "Demo Retail Store", businessEmail: "demo@demo.com", CACNumber: "RC-DEMO-001" };
+  if (field === "addBusiness") return { _id: "business-demo-1", businessName: "Demo Retail Store", businessEmail: "demo@example.com", CACNumber: "RC-DEMO-001" };
   if (field === "setTransactionPin" || field === "validateTransactionPin") return { success: true, data: true };
   if (field === "changePasscode") return { success: true, data: true };
   if (field === "validateBankInfo") return { success: true, data: JSON.stringify({ accountName: "Demo Account", accountNumber: "0123456789" }) };

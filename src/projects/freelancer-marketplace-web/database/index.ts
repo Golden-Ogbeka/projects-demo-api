@@ -151,7 +151,7 @@ export const setupFreelancerMarketplaceDatabase = () => {
       INSERT INTO freelancer_marketplace_users (_id, name, email, password, categoryFollowed_json, skills_json, chatId, avgResponseTime, searchHistory_json, userFollowed_json, role, total_experience_years, freelancer, intern, active_status, about, profile_img, offering_json, languages_json, shortlisted, blacklisted)
       VALUES (@_id, @name, @email, @password, @cf, @sk, @chatId, @avgResponse, @sh, @uf, @role, @exp, @fr, @in, @as, @about, @img, @offering, @lang, @sl, @bl)
     `).run({
-      _id: "user-1", name: "Demo Freelancer", email: "demo@demo.com", password: "password",
+      _id: "user-1", name: "Demo Freelancer", email: "demo@example.com", password: "password",
       cf: JSON.stringify(["cat-1", "cat-2"]), sk: JSON.stringify([{ _id: "cat-1", categoryName: "Web Development" }, { _id: "cat-2", categoryName: "Mobile Development" }]),
       chatId: "user-1-chat", avgResponse: "1h", sh: JSON.stringify(["web developer", "react"]), uf: JSON.stringify([]), role: "freelancer",
       exp: 5, fr: 1, in: 0, as: "online", about: "Demo freelancer with 5 years of experience in web and mobile development.",
@@ -162,7 +162,7 @@ export const setupFreelancerMarketplaceDatabase = () => {
       INSERT INTO freelancer_marketplace_users (_id, name, email, categoryFollowed_json, skills_json, chatId, avgResponseTime, role, total_experience_years, freelancer, active_status, about, profile_img, offering_json, languages_json)
       VALUES (@_id, @name, @email, @cf, @sk, @chatId, @avgResponse, @role, @exp, @fr, @as, @about, @img, @offering, @lang)
     `).run({
-      _id: "user-2", name: "Jane Designer", email: "jane@demo.com",
+      _id: "user-2", name: "Jane Smith", email: "jane@example.com",
       cf: JSON.stringify(["cat-3"]), sk: JSON.stringify([{ _id: "cat-3", categoryName: "Graphic Design" }]),
       chatId: "user-2-chat", avgResponse: "30m", role: "freelancer", exp: 4, fr: 1, as: "online",
       about: "Creative graphic designer specializing in branding.", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200",
@@ -172,7 +172,7 @@ export const setupFreelancerMarketplaceDatabase = () => {
       INSERT INTO freelancer_marketplace_users (_id, name, email, categoryFollowed_json, skills_json, chatId, avgResponseTime, role, total_experience_years, freelancer, active_status, about, profile_img, offering_json, languages_json)
       VALUES (@_id, @name, @email, @cf, @sk, @chatId, @avgResponse, @role, @exp, @fr, @as, @about, @img, @offering, @lang)
     `).run({
-      _id: "user-3", name: "Mike Writer", email: "mike@demo.com",
+      _id: "user-3", name: "Bob Johnson", email: "mike@example.com",
       cf: JSON.stringify(["cat-4"]), sk: JSON.stringify([{ _id: "cat-4", categoryName: "Content Writing" }]),
       chatId: "user-3-chat", avgResponse: "2h", role: "freelancer", exp: 6, fr: 1, as: "away",
       about: "Professional content writer and copywriter.", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200",
@@ -255,7 +255,7 @@ export const setupFreelancerMarketplaceDatabase = () => {
   const convCount = sqlite.prepare("SELECT COUNT(*) as count FROM freelancer_marketplace_conversations").get() as { count: number };
   if (convCount.count === 0) {
     sqlite.prepare("INSERT INTO freelancer_marketplace_conversations (_id, participants_json, conservationType) VALUES ('conv-1', @participants, 'direct')").run({
-      participants: JSON.stringify([{ _id: "user-1", name: "Demo Freelancer", email: "demo@demo.com" }, { _id: "user-2", name: "Jane Designer", email: "jane@demo.com" }]),
+      participants: JSON.stringify([{ _id: "user-1", name: "Demo Freelancer", email: "demo@example.com" }, { _id: "user-2", name: "Jane Smith", email: "jane@example.com" }]),
     });
     sqlite.prepare("INSERT INTO freelancer_marketplace_messages (_id, sender, recipients_json, message, conversationId, senderReadReceipt_json, recipientsReadReceipt_json) VALUES ('msg-1', 'user-1', @recipients, 'Hi, I am interested in your services', 'conv-1', @sr, @rr)").run({
       recipients: JSON.stringify(["user-2"]), sr: JSON.stringify(["user-1"]), rr: JSON.stringify([]),

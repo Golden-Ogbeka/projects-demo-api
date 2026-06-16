@@ -886,7 +886,7 @@ Backend module: `src/projects/event-marketplace-web` (base path `/event-marketpl
 
 #### Demo credentials
 
-- Email: `demo@demo.com` / `password`
+- Email: `demo@example.com` / `password`
 
 #### Client `.env` patch needed
 
@@ -926,7 +926,7 @@ Backend module: `src/projects/freelancer-marketplace-web` (base path `/freelance
 
 #### Demo credentials
 
-- Email: `demo@demo.com` / `password`
+- Email: `demo@example.com` / `password`
 
 #### Client `.env` patch needed
 
@@ -939,7 +939,7 @@ Backend module: `src/projects/freelancer-marketplace-web` (base path `/freelance
 
 ---
 
-## 2026-06-05 — artisan-services-web API audit fixes
+## 2026-06-05 ï¿½ artisan-services-web API audit fixes
 
 ### Changes applied
 
@@ -953,27 +953,27 @@ Backend module: `src/projects/freelancer-marketplace-web` (base path `/freelance
 
 ### List endpoints now using sendListFeedback (response shape: `{ success, message, data: [...], results: N }`)
 
-- `POST /api/v1/all/artisan` — paginated with `page`, `totalPages` extras
-- `POST /api/v1/all/portfolio` — filterable by `artisan`
-- `POST /api/v1/all/booking` — paginated
-- `POST /api/v1/all/favourite` — paginated
-- `POST /api/v1/all/rating` — filterable by `artisan`, sorted by date desc
-- `POST /api/v1/all/dispute` — paginated
-- `POST /api/v1/all/dispute-response` — returns empty array
-- `POST /api/v1/all/chat` — filterable by `artisan`, sorted by date desc
-- `GET /api/v1/chat/highlights` — grouped by artisan
-- `POST /api/v1/all/notification` — from SQLite, mapped to expected shape
-- `GET /api/v1/no-auth/all/artisan-category` — public
+- `POST /api/v1/all/artisan` ï¿½ paginated with `page`, `totalPages` extras
+- `POST /api/v1/all/portfolio` ï¿½ filterable by `artisan`
+- `POST /api/v1/all/booking` ï¿½ paginated
+- `POST /api/v1/all/favourite` ï¿½ paginated
+- `POST /api/v1/all/rating` ï¿½ filterable by `artisan`, sorted by date desc
+- `POST /api/v1/all/dispute` ï¿½ paginated
+- `POST /api/v1/all/dispute-response` ï¿½ returns empty array
+- `POST /api/v1/all/chat` ï¿½ filterable by `artisan`, sorted by date desc
+- `GET /api/v1/chat/highlights` ï¿½ grouped by artisan
+- `POST /api/v1/all/notification` ï¿½ from SQLite, mapped to expected shape
+- `GET /api/v1/no-auth/all/artisan-category` ï¿½ public
 
 ### Verification
 
-- `npx tsc --noEmit` — zero errors
+- `npx tsc --noEmit` ï¿½ zero errors
 - All 5 changes verified via file inspection
 
 ### Next likely work
 
 1. Start the artisan-services-web client (`npm run dev` in Koneqtor-Frontend) and walk through:
-   - Login with `demo@demo.com` / `password`
+   - Login with `demo@example.com` / `password`
    - Browse artisans ? view profiles ? create booking ? chat
    - Dispute flow ? notification management
 2. Verify Socket.IO real-time chat works in both `/chat` and `/dispute` namespaces.

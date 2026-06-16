@@ -144,19 +144,19 @@ export const setupBibleQuizDatabase = () => {
     const insertUser = sqlite.prepare(`INSERT INTO bq_users (_id,email,userName,firstName,lastName,password,isVerified,acceptTermsAndConditions,verificationCode,classLevel,country,countryState,gender,school,guardianEmail,guardianFullName,goal,numOfReferrals,referralEarnings,personalReferralCode,profilePicture,role,freeAccess,subscription_plan,subscription_active,subscription_gateway,lastPaymentDate,nextPaymentDate,createdAt,isFrozen) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`);
 
     const users = [
-      ["bq-user-1","demo@demo.com","demo","Demo","User","password",1,1,"","SS1","Nigeria","Lagos","Male","Demo High School","parent@demo.com","Parent Demo",3,5,2500,"DEMO001","https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200","user",1,"Premium",1,"paystack",d(25),d(65),d(90),0],
-      ["bq-user-2","jane@a1quest.com","jane123","Jane","Smith",".",1,1,"","JS2","Nigeria","Abuja","Female","City Academy","mother@jane.com","Mary Smith",2,3,1200,"JANE002","https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200","user",1,"Basic",1,"flutterwave",d(10),d(55),d(60),0],
-      ["bq-user-3","mike@a1quest.com","mike_learner","Mike","Johnson","password",1,1,"","SS2","Nigeria","Rivers","Male","Port Harcourt Intl","","",3,8,5000,"MIKE003","","user",1,"Premium",1,"paystack",d(30),d(70),d(120),0],
-      ["bq-user-4","sarah@a1quest.com","sarah_quiz","Sarah","Williams","password",1,1,"","JS3","Nigeria","Oyo","Female","Ibadan Grammar School","guardian@sarah.com","Mr Williams",1,2,800,"SARAH004","","user",1,"Basic",1,"flutterwave",d(5),d(50),d(45),0],
-      ["bq-user-5","unverified@a1quest.com","unverified_user","Unverified","User","password",0,1,"UNV-123","SS3","Nigeria","Lagos","Male","","","",0,0,0,"UNV005","","user",0,"",0,"","","",d(2),0],
-      ["bq-user-6","parent@a1quest.com","parent_user","Parent","Account","password",1,1,"","","Nigeria","","","","","",0,0,0,"PARENT006","","user",0,"",0,"","","",d(80),0],
+      ["bq-user-1","demo@example.com","demo","Demo","User","password",1,1,"","SS1","Nigeria","Lagos","Male","Demo High School","parent@example.com","Parent Demo",3,5,2500,"DEMO001","https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200","user",1,"Premium",1,"paystack",d(25),d(65),d(90),0],
+      ["bq-user-2","jane@example.com","jane123","Jane","Smith",".",1,1,"","JS2","Nigeria","Abuja","Female","City Academy","mother@example.com","Mary Smith",2,3,1200,"JANE002","https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200","user",1,"Basic",1,"flutterwave",d(10),d(55),d(60),0],
+      ["bq-user-3","mike@example.com","mike_learner","Mike","Johnson","password",1,1,"","SS2","Nigeria","Rivers","Male","Port Harcourt Intl","","",3,8,5000,"MIKE003","","user",1,"Premium",1,"paystack",d(30),d(70),d(120),0],
+      ["bq-user-4","sarah@example.com","sarah_quiz","Sarah","Williams","password",1,1,"","JS3","Nigeria","Oyo","Female","Ibadan Grammar School","guardian@example.com","Mr Williams",1,2,800,"SARAH004","","user",1,"Basic",1,"flutterwave",d(5),d(50),d(45),0],
+      ["bq-user-5","unverified@example.com","unverified_user","Unverified","User","password",0,1,"UNV-123","SS3","Nigeria","Lagos","Male","","","",0,0,0,"UNV005","","user",0,"",0,"","","",d(2),0],
+      ["bq-user-6","parent@example.com","parent_user","Parent","Account","password",1,1,"","","Nigeria","","","","","",0,0,0,"PARENT006","","user",0,"",0,"","","",d(80),0],
     ];
     for (const u of users) insertUser.run(...u);
 
     const insertAdmin = sqlite.prepare(`INSERT INTO bq_admin_users (_id,email,firstName,lastName,userName,phoneNumber,password,role,isVerified,createdAt) VALUES (?,?,?,?,?,?,?,?,?,?)`);
-    insertAdmin.run("bq-admin-1","admin@a1quest.com","Super","Admin","superadmin","08012345678","password","superAdmin",1,d(180));
-    insertAdmin.run("bq-admin-2","editor@a1quest.com","Content","Editor","contenteditor","08098765432","password","admin",1,d(90));
-    insertAdmin.run("bq-admin-3","viewer@a1quest.com","View","Only","viewonly","08055556666","password","viewer",1,d(30));
+    insertAdmin.run("bq-admin-1","admin@example.com","Super","Admin","superadmin","08012345678","password","superAdmin",1,d(180));
+    insertAdmin.run("bq-admin-2","editor@example.com","Content","Editor","contenteditor","08098765432","password","admin",1,d(90));
+    insertAdmin.run("bq-admin-3","viewer@example.com","View","Only","viewonly","08055556666","password","viewer",1,d(30));
 
     const insertRole = sqlite.prepare(`INSERT INTO bq_roles (_id,name,permissions,createdAt) VALUES (?,?,?,?)`);
     insertRole.run("bq-role-1","Super Admin",JSON.stringify(["all"]),d(180));
@@ -448,9 +448,9 @@ export const setupBibleQuizDatabase = () => {
     insertFaq.run("bq-faq-8","Can I use A1Quest on mobile?","Yes, A1Quest is fully responsive and works on all devices including phones and tablets.",d(150));
 
     const insertFeedback = sqlite.prepare(`INSERT INTO bq_feedback (_id,fullName,email,message,createdAt) VALUES (?,?,?,?,?)`);
-    insertFeedback.run("bq-fb-1","Demo User","demo@demo.com","Great platform! I have learned so much about mathematics.",d(20));
-    insertFeedback.run("bq-fb-2","Jane Smith","jane@a1quest.com","The step-by-step lessons make math so easy to understand.",d(15));
-    insertFeedback.run("bq-fb-3","Mike Johnson","mike@a1quest.com","The video tutorials are excellent for visual learners.",d(10));
+    insertFeedback.run("bq-fb-1","Demo User","demo@example.com","Great platform! I have learned so much about mathematics.",d(20));
+    insertFeedback.run("bq-fb-2","Jane Smith","jane@example.com","The step-by-step lessons make math so easy to understand.",d(15));
+    insertFeedback.run("bq-fb-3","Mike Johnson","mike@example.com","The video tutorials are excellent for visual learners.",d(10));
 
     const insertLB = sqlite.prepare(`INSERT INTO bq_leaderboard (_id,user_id,userName,points,createdAt) VALUES (?,?,?,?,?)`);
     const lb = [

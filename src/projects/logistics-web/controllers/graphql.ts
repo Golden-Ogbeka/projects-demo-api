@@ -50,7 +50,7 @@ const makeUserData = (overrides?: Record<string, unknown>) => {
     firstName: (overrides?.firstName as string) || (dbUser?.firstName as string) || "Demo",
     lastName: (overrides?.lastName as string) || (dbUser?.lastName as string) || "User",
     otherName: (overrides?.otherName as string) || "",
-    email: (overrides?.email as string) || (dbUser?.email as string) || "demo@demo.com",
+    email: (overrides?.email as string) || (dbUser?.email as string) || "demo@example.com",
     userName: (overrides?.userName as string) || ((overrides?.name as string) || (dbUser?.fullName as string) || "Demo User").toLowerCase().replace(/\s/g, "."),
     phoneNumber: (overrides?.phoneNumber as string) || (dbUser?.phoneNumber as string) || "+2348012345678",
     role: (overrides?.role as string) || (dbUser?.role as string) || "CUSTOMER",
@@ -73,7 +73,7 @@ const makeShipment = (overrides?: Record<string, unknown>) => {
   const userName = (overrides?.senderFirstName as string) || (dbUser?.firstName as string) || "Demo";
   const userLastName = (overrides?.senderLastName as string) || (dbUser?.lastName as string) || "User";
   const userFullName = `${userName} ${userLastName}`;
-  const userEmail = (overrides?.senderEmail as string) || (dbUser?.email as string) || "demo@demo.com";
+  const userEmail = (overrides?.senderEmail as string) || (dbUser?.email as string) || "demo@example.com";
   const userPhone = (overrides?.senderPhone as string) || (dbUser?.phoneNumber as string) || "+2348012345678";
 
   return {
@@ -257,11 +257,11 @@ const resolveField = (field: string, variables: Record<string, unknown>): unknow
         makeUserData(rows[0] ? { _id: rows[0]._id as string } : undefined),
         makeUserData({
           _id: "ship-user-2", firstName: "Jane", lastName: "Admin",
-          name: "Jane Admin", email: "jane@shipplug.africa", role: "ADMIN",
+          name: "Jane Smith", email: "jane@example.com", role: "ADMIN",
         }),
         makeUserData({
           _id: "ship-user-3", firstName: "Bob", lastName: "Staff",
-          name: "Bob Staff", email: "bob@shipplug.africa", role: "STAFF",
+          name: "Bob Johnson", email: "bob@example.com", role: "STAFF",
         }),
       ],
     };
@@ -612,7 +612,7 @@ const resolveField = (field: string, variables: Record<string, unknown>): unknow
     const user = sqlite.prepare("SELECT * FROM logistics_web_users LIMIT 1").get() as Record<string, unknown> | undefined;
     return {
       token: "demo-logistics-web-token",
-      user: user || { _id: "ship-user-1", email: "demo@demo.com" },
+      user: user || { _id: "ship-user-1", email: "demo@example.com" },
       expiresIn: 86400,
     };
   }

@@ -137,9 +137,9 @@ export const setupLogisticsAdminDatabase = () => {
       "INSERT INTO logistics_admin_users (_id, userId, name, firstName, lastName, otherName, userName, email, phoneNumber, role, avatar, isActive, accountType, isEmailVerified, password, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
     );
     const users = [
-      { _id: "user-1", name: "Demo Admin", firstName: "Demo", lastName: "Admin", email: "demo@demo.com", phoneNumber: "+2348012345678", role: "super_admin", avatar: UNSPLASH.avatar, userName: "demoadmin" },
-      { _id: "user-2", name: "Jane Operator", firstName: "Jane", lastName: "Operator", email: "jane@shipplug.africa", phoneNumber: "+2348090001001", role: "operations", avatar: UNSPLASH.avatar2, userName: "janeoperator" },
-      { _id: "user-3", name: "Mike Viewer", firstName: "Mike", lastName: "Viewer", email: "mike@shipplug.africa", phoneNumber: "+2348090001002", role: "viewer", avatar: UNSPLASH.avatar3, userName: "mikeviewer" },
+      { _id: "user-1", name: "Demo Admin", firstName: "Demo", lastName: "Admin", email: "demo@example.com", phoneNumber: "+2348012345678", role: "super_admin", avatar: UNSPLASH.avatar, userName: "demoadmin" },
+      { _id: "user-2", name: "Jane Smith", firstName: "Jane", lastName: "Operator", email: "jane@example.com", phoneNumber: "+2348090001001", role: "operations", avatar: UNSPLASH.avatar2, userName: "janeoperator" },
+      { _id: "user-3", name: "Bob Johnson", firstName: "Mike", lastName: "Viewer", email: "mike@example.com", phoneNumber: "+2348090001002", role: "viewer", avatar: UNSPLASH.avatar3, userName: "mikeviewer" },
     ];
     users.forEach((u) => insert.run(u._id, u._id, u.name, u.firstName, u.lastName, "", u.userName, u.email, u.phoneNumber, u.role, u.avatar, 1, "INDIVIDUAL", 1, "password", u._id === "user-1" ? "2026-01-01T00:00:00.000Z" : u._id === "user-2" ? "2026-02-01T00:00:00.000Z" : "2026-03-01T00:00:00.000Z"));
   }
@@ -154,7 +154,7 @@ export const setupLogisticsAdminDatabase = () => {
       const id = i + 1;
       const status = parcelStatuses[i % parcelStatuses.length];
       const senderName = i % 3 === 0 ? "Acme Corp" : i % 3 === 1 ? "Global Traders" : "ShipFast Ltd";
-      const recipientName = i % 2 === 0 ? "Chinwe Okafor" : "Emeka Nwosu";
+      const recipientName = i % 2 === 0 ? "Diana Jones" : "Charlie Brown";
       const destination = i % 2 === 0 ? "Abuja" : "Port Harcourt";
       insert.run(
         `parcel-${id}`, `parcel-${id}`, `SA-${String(id).padStart(6, "0")}`, status,
@@ -173,9 +173,9 @@ export const setupLogisticsAdminDatabase = () => {
   const shipmentCount = sqlite.prepare("SELECT COUNT(*) as count FROM logistics_admin_shipments").get() as { count: number };
   if (shipmentCount.count === 0) {
     const franchisePartners = [
-      { address: "23 Kudirat Street, Ikeja", partnerFullName: "FastTrack Logistics", email: "info@fasttrack.com", phoneNumber: "+2348011110001", state: "Lagos" },
-      { address: "45 Aba Road, Port Harcourt", partnerFullName: "Swift Delivery Co", email: "hello@swiftdelivery.com", phoneNumber: "+2348011110002", state: "Rivers" },
-      { address: "12 Zik Avenue, Enugu", partnerFullName: "SafeHands Logistics", email: "contact@safehands.com", phoneNumber: "+2348011110003", state: "Enugu" },
+      { address: "23 Kudirat Street, Ikeja", partnerFullName: "FastTrack Logistics", email: "info@example.com", phoneNumber: "+2348011110001", state: "Lagos" },
+      { address: "45 Aba Road, Port Harcourt", partnerFullName: "Swift Delivery Co", email: "hello@example.com", phoneNumber: "+2348011110002", state: "Rivers" },
+      { address: "12 Zik Avenue, Enugu", partnerFullName: "SafeHands Logistics", email: "contact@example.com", phoneNumber: "+2348011110003", state: "Enugu" },
     ];
     const users = sqlite.prepare("SELECT * FROM logistics_admin_users").all() as Array<Record<string, unknown>>;
     const makeShipUser = (u: Record<string, unknown>) => ({ _id: u._id, name: u.name, firstName: u.firstName, lastName: u.lastName, otherName: u.otherName, email: u.email, userName: u.userName, phoneNumber: u.phoneNumber, accountType: u.accountType, isEmailVerified: u.isEmailVerified, role: u.role, createdAt: u.createdAt });
@@ -254,7 +254,7 @@ export const setupLogisticsAdminDatabase = () => {
         ["completed", "completed", "completed", "pending", "failed", "completed"][i % 6],
         ["shipment", "shipment", "refund", "wallet_funding", "shipment", "withdrawal"][i % 6],
         `Payment for parcel SA-${String(i + 1).padStart(6, "0")}`,
-        i % 2 === 0 ? "Chinwe Okafor" : "Emeka Nwosu",
+        i % 2 === 0 ? "Diana Jones" : "Charlie Brown",
         ["card", "bank_transfer", "ussd", "wallet"][i % 4],
         new Date(Date.now() - i * 86400000).toISOString()
       );
@@ -267,9 +267,9 @@ export const setupLogisticsAdminDatabase = () => {
     [
       { _id: "contact-1", name: "John Doe", emailAddress: "john@example.com", company: "Tech Corp", description: "I have a question about shipping rates" },
       { _id: "contact-2", name: "Jane Smith", emailAddress: "jane@example.com", company: "Global Trade Ltd", description: "Looking for bulk shipping discounts" },
-      { _id: "contact-3", name: "Ahmed Musa", emailAddress: "ahmed@example.com", company: "Musa Enterprises", description: "Need help tracking my parcel" },
-      { _id: "contact-4", name: "Sarah Johnson", emailAddress: "sarah@example.com", company: "Johnson & Co", description: "Partnership inquiry" },
-      { _id: "contact-5", name: "Peter Obi", emailAddress: "peter@example.com", company: "Obi Ventures", description: "Complaint about delayed delivery" },
+      { _id: "contact-3", name: "Paul Martin", emailAddress: "ahmed@example.com", company: "Musa Enterprises", description: "Need help tracking my parcel" },
+      { _id: "contact-4", name: "Rachel Robinson", emailAddress: "sarah@example.com", company: "Johnson & Co", description: "Partnership inquiry" },
+      { _id: "contact-5", name: "Sam Clark", emailAddress: "peter@example.com", company: "Obi Ventures", description: "Complaint about delayed delivery" },
     ].forEach((c) => insert.run(c._id, c.name, c.emailAddress, c.company, c.description, null));
   }
 
@@ -277,9 +277,9 @@ export const setupLogisticsAdminDatabase = () => {
   if (disputeCount.count === 0) {
     const insert = sqlite.prepare("INSERT INTO logistics_admin_disputes (_id, parcelId, trackingNumber, customerName, subject, description, status, priority, resolution, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     [
-      { _id: "dispute-1", parcelId: "parcel-1", trackingNumber: "SA-000001", customerName: "Chinwe Okafor", subject: "Damaged Item", description: "The package arrived with visible damage to the corner.", status: "open", priority: "high", resolution: null, createdAt: new Date(Date.now() - 3 * 86400000).toISOString(), updatedAt: new Date(Date.now() - 1 * 86400000).toISOString() },
-      { _id: "dispute-2", parcelId: "parcel-3", trackingNumber: "SA-000003", customerName: "Emeka Nwosu", subject: "Delayed Delivery", description: "Package was supposed to arrive 2 days ago.", status: "in_progress", priority: "medium", resolution: null, createdAt: new Date(Date.now() - 5 * 86400000).toISOString(), updatedAt: new Date(Date.now() - 1 * 86400000).toISOString() },
-      { _id: "dispute-3", parcelId: "parcel-7", trackingNumber: "SA-000007", customerName: "Chinwe Okafor", subject: "Wrong Item Delivered", description: "Received a different item than what was ordered.", status: "resolved", priority: "high", resolution: "Replacement sent", createdAt: new Date(Date.now() - 10 * 86400000).toISOString(), updatedAt: new Date(Date.now() - 2 * 86400000).toISOString() },
+      { _id: "dispute-1", parcelId: "parcel-1", trackingNumber: "SA-000001", customerName: "Diana Jones", subject: "Damaged Item", description: "The package arrived with visible damage to the corner.", status: "open", priority: "high", resolution: null, createdAt: new Date(Date.now() - 3 * 86400000).toISOString(), updatedAt: new Date(Date.now() - 1 * 86400000).toISOString() },
+      { _id: "dispute-2", parcelId: "parcel-3", trackingNumber: "SA-000003", customerName: "Charlie Brown", subject: "Delayed Delivery", description: "Package was supposed to arrive 2 days ago.", status: "in_progress", priority: "medium", resolution: null, createdAt: new Date(Date.now() - 5 * 86400000).toISOString(), updatedAt: new Date(Date.now() - 1 * 86400000).toISOString() },
+      { _id: "dispute-3", parcelId: "parcel-7", trackingNumber: "SA-000007", customerName: "Diana Jones", subject: "Wrong Item Delivered", description: "Received a different item than what was ordered.", status: "resolved", priority: "high", resolution: "Replacement sent", createdAt: new Date(Date.now() - 10 * 86400000).toISOString(), updatedAt: new Date(Date.now() - 2 * 86400000).toISOString() },
     ].forEach((d) => insert.run(d._id, d.parcelId, d.trackingNumber, d.customerName, d.subject, d.description, d.status, d.priority, d.resolution, d.createdAt, d.updatedAt));
   }
 
@@ -298,10 +298,10 @@ export const setupLogisticsAdminDatabase = () => {
   if (teamCount.count === 0) {
     const insert = sqlite.prepare("INSERT INTO logistics_admin_team_members (_id, userId, name, email, role, permissions, avatar, invitedAt, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
     [
-      { _id: "team-1", userId: "user-1", name: "Demo Admin", email: "demo@demo.com", role: "super_admin", permissions: ["all"], avatar: UNSPLASH.avatar, invitedAt: "2026-01-01T00:00:00.000Z", status: "active" },
-      { _id: "team-2", userId: "user-2", name: "Jane Operator", email: "jane@shipplug.africa", role: "operations", permissions: ["view_parcels", "create_parcels", "update_parcels", "view_dashboard"], avatar: UNSPLASH.avatar2, invitedAt: "2026-02-01T00:00:00.000Z", status: "active" },
-      { _id: "team-3", userId: "user-3", name: "Mike Viewer", email: "mike@shipplug.africa", role: "viewer", permissions: ["view_parcels", "view_dashboard"], avatar: UNSPLASH.avatar3, invitedAt: "2026-03-01T00:00:00.000Z", status: "active" },
-      { _id: "team-4", userId: null, name: "Pending Invite", email: "invited@shipplug.africa", role: "operations", permissions: ["view_parcels", "create_parcels"], invitedAt: "2026-05-20T00:00:00.000Z", status: "pending" },
+      { _id: "team-1", userId: "user-1", name: "Demo Admin", email: "demo@example.com", role: "super_admin", permissions: ["all"], avatar: UNSPLASH.avatar, invitedAt: "2026-01-01T00:00:00.000Z", status: "active" },
+      { _id: "team-2", userId: "user-2", name: "Jane Smith", email: "jane@example.com", role: "operations", permissions: ["view_parcels", "create_parcels", "update_parcels", "view_dashboard"], avatar: UNSPLASH.avatar2, invitedAt: "2026-02-01T00:00:00.000Z", status: "active" },
+      { _id: "team-3", userId: "user-3", name: "Bob Johnson", email: "mike@example.com", role: "viewer", permissions: ["view_parcels", "view_dashboard"], avatar: UNSPLASH.avatar3, invitedAt: "2026-03-01T00:00:00.000Z", status: "active" },
+      { _id: "team-4", userId: null, name: "Demo Invite", email: "invited@example.com", role: "operations", permissions: ["view_parcels", "create_parcels"], invitedAt: "2026-05-20T00:00:00.000Z", status: "pending" },
     ].forEach((t) => insert.run(t._id, t.userId, t.name, t.email, t.role, JSON.stringify(t.permissions), t.avatar, t.invitedAt, t.status));
   }
 
